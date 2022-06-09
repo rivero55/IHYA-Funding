@@ -2,8 +2,8 @@
 @section('header')
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
-        <li class="breadcrumb-item"><a href="">Home</a></li>
-        <li class="breadcrumb-item"><a href="">Project Owner</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('admin') }}">Home</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('proyek-owner.index') }}">Project Owner</a></li>
         <li class="breadcrumb-item active" aria-current="page">Tambah Data</li>
     </ol>
 </nav>
@@ -29,7 +29,7 @@
             </div>
             @endif
             <div class="card-body">
-                <form action="" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('proyek-owner.store') }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     <div class="row">
                         <div class="form-group col-md-6">

@@ -11,6 +11,5 @@ class LandingController extends Controller
     {
         $datas= proyek::all();
         return view('event')->with(compact('datas'));
-
     }
 }

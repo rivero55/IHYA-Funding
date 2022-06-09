@@ -1,8 +1,12 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\API\ProyekController;
 use App\Http\Controllers\ProyekOwnerController;
+use App\Http\Controllers\ProyekController;
+use App\Http\Controllers\AdminController;
+use Illuminate\Support\Facades\Auth;
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,10 +25,17 @@ Route::get('/', function () {
 Route::get('/landing', function () {
     return view('index');
 })->name('landing');
-Route::get('/admin', function () {
-    return view('admin.admin');})->name('admin');
+
 Route::get('/event', [App\Http\Controllers\LandingController::class, 'listevent'])->name('event');
 Route::get('/admin/proyek', function () {
     return view('admin.proyek.create');})->name('admin.proyek.create');
-Route::get('/admin/proyek_owner', [ProyekOwnerController::class, 'index'])->name('admin.proyek_owner');;
-Route::get('/admin/proyek_owner/create', [ProyekOwnerController::class, 'create'])->name('admin.proyek_owner.create');;
+
+Route::middleware(['auth', 'checkRole:admin'])->prefix('admin')->group(function(){ 
+    Route::get('/', [AdminController::class, 'index'])->name('admin');
+    Route::resource('proyek-owner', ProyekOwnerController::class);
+    Route::resource('proyek', ProyekController::class);
+
+});
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

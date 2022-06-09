@@ -3,7 +3,7 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('admin') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('admin') }}">Project</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('proyek.index') }}">Project</a></li>
         <li class="breadcrumb-item active" aria-current="page">Tambah Data</li>
     </ol>
 </nav>
@@ -37,9 +37,9 @@
                             <label for="project_owner">Project Owner</label>
                             <select class="form-control" id="project_owner" name="project_owner">
                                 <option value="0" selected disabled>Pilih Pemilik Project</option>
-                                
-                                <option value=""></option>
-                               
+                                @foreach ($proyek_owners as $project_owner)
+                                <option value="{{ $project_owner->id}}">{{ $project_owner->name }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
@@ -86,11 +86,7 @@
                             <label for="image">Gambar</label>
                             <input type="file" class="form-control" name="image" id="image" accept="image/*">
                         </div>
-                        <div class="form-group col-md-3">
-                            <label for="prospektus">File Prospektus</label>
-                            <input type="file" class="form-control" name="prospektus" id="prospektus"
-                                accept="application/pdf">
-                        </div>
+                        
                     </div>
 
                     <div class="row mt-3">

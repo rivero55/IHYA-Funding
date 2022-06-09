@@ -3,7 +3,7 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('admin') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('project-owner.index') }}">Project Owner</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('proyek-owner.index') }}">Project Owner</a></li>
         <li class="breadcrumb-item active" aria-current="page">Edit Data</li>
     </ol>
 </nav>
@@ -29,7 +29,7 @@
             </div>
             @endif
             <div class="card-body">
-                <form action="{{ route('project-owner.update', $project_owner->id) }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('proyek-owner.update', $project_owner->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
                     @method('PATCH')
                     <div class="row">
@@ -46,7 +46,7 @@
                     </div>
                     
                     <div class="d-flex justify-content-end">
-                        <a class="btn btn-secondary mr-3" href="{{ route('project-owner.index') }}">Cancel</a>
+                        <a class="btn btn-secondary mr-3" href="{{ route('proyek-owner.index') }}">Cancel</a>
                         <button class="btn btn-primary">Save</button>
                     </div>
                 </form>
