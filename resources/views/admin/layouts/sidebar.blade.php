@@ -14,7 +14,7 @@ background: linear-gradient(180deg, rgba(9,193,58,1) 0%, rgba(5,119,51,1) 100%);
 
     <!-- Nav Item - Dashboard -->
     <li class="nav-item {{last(request()->segments()) == 'admin' ? 'active':''}}">
-        <a class="nav-link" href="{route('admin')}}">
+        <a class="nav-link" href="{{route('admin')}}">
             <i class="fas fa-fw fa-tachometer-alt"></i>
             <span>Dashboard</span></a>
     </li>

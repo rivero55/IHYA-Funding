@@ -47,7 +47,7 @@
                         <li class="nav__item"><a href="" class="nav__link ">Donatur</a></li>
                         <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
                         <li class="nav__item"><a href="#services" class="nav__link">Services</a></li>
-                        <li class="nav__item"><a href="#menu" class="nav__link">Login</a></li>
+                        <li class="nav__item"><a href="{{route('login')}}" class="nav__link">Login</a></li>
 
                         <li><i class='bx bx-moon change-theme' id="theme-button"></i></li>
                     </ul>
