@@ -3,44 +3,49 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('admin') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('proyek.index') }}">Project</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Tambah Data</li>
+        <li class="breadcrumb-item"><a href="{{ route('proyek.index') }}">proyek</a></li>
+        <li class="breadcrumb-item active" aria-current="page">Edit Data</li>
     </ol>
 </nav>
-<h1 class="h3 mb-0 text-gray-800">Project</h1>
+<h1 class="h3 mb-0 text-gray-800">proyek</h1>
 {{-- <p class="mb-4">Description</p> --}}
+
+@endsection
 @section('content')
 <div class="row">
     <div class="col-12">
         <div class="card shadow mb-4">
             <div class="card-header py-3">
-                <h6 class="m-0 font-weight-bold text-primary">Tambah Data</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Edit Data</h6>
             </div>
             @if ($errors->any())
             <div class="alert alert-danger">
                 <strong>Whoops!</strong> There were some problems with your input.<br><br>
                 <ul>
-                @foreach ($errors->all() as $error)
+                    @foreach ($errors->all() as $error)
                     <li>{{ $error }}</li>
                     @endforeach
                 </ul>
             </div>
             @endif
             <div class="card-body">
-                <form action="{{ route('proyek.store') }}" method="POST" enctype="multipart/form-data">
+                <form action="{{ route('proyek.update', $proyek->id) }}" method="POST" enctype="multipart/form-data">
                     @csrf
+                    @method('PATCH')
                     <div class="row">
                         <div class="form-group col-md-6">
                             <label for="proyek_name">Nama Proyek</label>
                             <input type="text" class="form-control" name="proyek_name" id="proyek_name"
-                                placeholder="ex: Banjir Rendam Jabodetabek Lagi, Ribuan Terdampak!" value="{{old('proyek_name') }}">
+                                placeholder="ex: Peternakan Lele" value="{{old('proyek_name') ?? $proyek->name}}">
                         </div>
                         <div class="form-group col-md-6">
                             <label for="proyek_owner">Proyek Owner</label>
                             <select class="form-control" id="proyek_owner" name="proyek_owner">
                                 <option value="0" selected disabled>Pilih Pemilik Proyek</option>
                                 @foreach ($proyek_owners as $proyek_owner)
-                                <option value="{{ $proyek_owner->id}}">{{ $proyek_owner->name }}</option>
+                                <option value="{{ $proyek_owner->id}}"
+                                    {{$proyek->owner_id == $proyek_owner->id ? 'selected':''}}>
+                                    {{ $proyek_owner->name }}</option>
                                 @endforeach
                             </select>
                         </div>
@@ -79,29 +84,31 @@
                             <select class="form-control" id="category" name="type">
                                 <option value="" selected disabled>Pilih Kategori</option>
                                 @foreach ($proyek_types as $proyek_type)
-                                <option>{{$proyek_type->name}}</option>
+                                <option {{$proyek->type == $proyek_type->name ? 'selected':''}}>
+                                    {{$proyek_type->name}}</option>
                                 @endforeach
                             </select>
                         </div>
-
+                        
                         <div class="form-group col-md-3">
                             <label for="image">Gambar</label>
                             <input type="file" class="form-control" name="image" id="image" accept="image/*">
+                            <small class="form-text text-muted">Kosongkan jika tidak diubah</small>
                         </div>
-
                     </div>
 
                     <div class="row mt-3">
                         <div class="form-group col-md-12">
                             <label for="description">Deskripsi</label>
-                            <textarea class="form-control" id="description" name="description" rows="3">{{ old('description') }}</textarea>
+                            <textarea class="form-control" id="description" name="description"
+                                rows="3">{{ old('description') ?? $proyek->description }}</textarea>
                             <small class="form-text text-muted">Opsional</small>
                         </div>
                     </div>
 
                     <div class="d-flex justify-content-end">
-                        <a class="btn btn-secondary mr-3" href="{{ route('admin') }}">Cancel</a>
-                        <button class="btn btn-primary">Submit</button>
+                        <a class="btn btn-secondary mr-3" href="{{ route('proyek.index') }}">Cancel</a>
+                        <button class="btn btn-primary">Simpan</button>
                     </div>
                 </form>
             </div>
@@ -109,11 +116,11 @@
     </div>
 </div>
 @endsection
-@endsection
 @push('css')
 <link href="{{asset('vendor/summernote/summernote-bs4.min.css')}}" rel="stylesheet">
 @endpush
 @push('js')
+{{-- Summernote --}}
 <script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
 <script>
 $(document).ready(function() {
@@ -123,11 +130,12 @@ $(document).ready(function() {
     });
 });
 </script>
+
 {{-- Script region existing --}}
 @include('admin.plugins.set-existing-region')
-@if ( !empty(old('village')) )
+@if ( !empty(old('village')) || !empty($proyek->location_code))
 <script>
-set_region("{{ old('village')  }}");
+set_region("{{ old('village') ?? $proyek->location_code }}");
 </script>
 @else
 <script>
@@ -138,4 +146,5 @@ get_province();
 
 {{-- Script Get Region --}}
 @include('admin.plugins.get-region')
+
 @endpush

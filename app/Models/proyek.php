@@ -12,13 +12,23 @@ class proyek extends Model
     use SoftDeletes;
 
     protected $table='proyek';
+    protected $casts = [
+		'owner_id' => 'int'
+	];
+
     protected $fillable = [
-        'name',
-        'type',
-        'location_code',
-        'image',
-        'description'
+        'owner_id',
+		'name',
+		'type',
+		'location_code',
+		'image',
+		'description'
     ];
     protected $hidden= [];
+    public function proyek_owner()
+	{
+		return $this->belongsTo(ProyekOwner::class, 'owner_id');
+	}
+
 }
 

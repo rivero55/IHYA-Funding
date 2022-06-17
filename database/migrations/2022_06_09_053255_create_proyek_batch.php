@@ -20,11 +20,9 @@ return new class extends Migration
             $table->unsignedDouble('minimum_fund')->nullable();
             $table->unsignedDouble('maximum_fund')->nullable();
             $table->unsignedDouble('target_nominal')->nullable();
-            $table->boolean('is_yearly');
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->enum('status', ['draft','funding','ongoing','paid','closed']);
-            $table->string('penerima_dana');
             $table->unsignedDouble('dana_terkumpul')->nullable();
             $table->timestamps();
             $table->softDeletes();

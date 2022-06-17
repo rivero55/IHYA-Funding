@@ -6,7 +6,10 @@ use App\Helpers\ApiFormatter;
 use App\Http\Controllers\Controller;
 use App\Models\proyek;
 use App\Models\ProyekOwner;
+use App\Models\ProyekType;
+use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 
 class ProyekController extends Controller
@@ -30,7 +33,8 @@ class ProyekController extends Controller
     public function create()
     {
         $proyek_owners = ProyekOwner::all();
-        return view('admin.proyek.create',compact('proyek_owners'));
+        $proyek_types= ProyekType::all();
+        return view('admin.proyek.create',compact('proyek_owners','proyek_types'));
     }
 
     /**
@@ -42,32 +46,47 @@ class ProyekController extends Controller
     public function store(Request $request)
     {
         //
-        try {
             $request->validate([
-                'name' => 'required',
+                'proyek_name' => 'required',
+                'proyek_owner' => 'required',
                 'type'=>'required',
                 'location_code'=>'required',
-                'description'=>'required',
+                'image' => 'required|file',
+                'description'=>'required|string',
             ]);
-            $proyek=proyek::create([
-                'name' => $request->name,
-                'type'=>$request->type,
-                'location_code'=>$request->location_code,
-                'description'=>$request->description,
-
+            #rename file image to new name 
+            $fileNameImage = date("Y-m-d-His") . '_' . $request->file('image')->getClientOriginalName();
+            #add to storage
+            $image = $request->file('image')
+                ->storeAs('public/images/proyek/', $fileNameImage);
+            $store = Proyek::insert([
+                'owner_id' => $request->proyek_owner,
+                'name' => $request->proyek_name,
+                'type' => $request->type,
+                'location_code' => $request->location_code,
+                'image'=> $fileNameImage,
+                'description' => $request->description,
+                'created_at' => Carbon::now(),
+                'updated_at' => Carbon::now(),
             ]);
-            $data = proyek::where('id', '=', $proyek->id)->get();
-            if($data){
-                return ApiFormatter::createApi(200, 'Success' , $data);
+            if($store){
+            // $log = [
+            //     'user_id' => Auth::user()->id,
+            //     'workflow_type' => 'project',
+            //     'activity' => 'add',
+            //     'description' => 'Add Project '.$request->project_name,
+            //     'created_at' => Carbon::now(),
+            //     'updated_at' => Carbon::now(),
+            // ];
+            // $document = Log::create($log);
+            // Toastr::success('Data berhasil ditambahkan','Berhasil!');
+            return redirect()->route('proyek.index');
             }else{
-                return ApiFormatter::createApi(400,'Failed');
-    
+                // Toastr::error('Data gagal ditambahkan, coba lagi','Gagal!');
+            return redirect()->back()->withInput();
+            dd($store);
             }
-            //code...
-        } catch (Exception $error) {
-            //throw $th;
-            return ApiFormatter::createApi(400, 'Failed');
-        }
+            
     }
 
     /**
@@ -79,13 +98,9 @@ class ProyekController extends Controller
     public function show($id)
     {
         //
-        $data = proyek::where('id', '=', $id)->get();
-        if($data){
-            return ApiFormatter::createApi(200, 'Success' , $data);
-        }else{
-            return ApiFormatter::createApi(400,'Failed');
-    
-        }
+        $proyek = Proyek::find($id);
+        return view('admin.proyek.show', compact('proyek'));
+        
     }
 
     /**
@@ -97,6 +112,10 @@ class ProyekController extends Controller
     public function edit($id)
     {
         //
+        $proyek = Proyek::find($id);
+        $proyek_owners = ProyekOwner::all();
+        $proyek_types = ProyekType::orderBy('name')->get();
+        return view('admin.proyek.edit', compact('proyek','proyek_owners', 'proyek_types'));
     }
 
     /**
@@ -108,34 +127,52 @@ class ProyekController extends Controller
      */
     public function update(Request $request, $id)
     {
-        try {
+        
             $request->validate([
-                'name' => 'required',
+                'proyek_name' => 'required',
+                'proyek_owner' => 'required',
                 'type'=>'required',
                 'location_code'=>'required',
-                'description'=>'required',
+                'image' => 'nullable|file',
+                'description'=>'nullable|string',
             ]);
-            $proyek= proyek::findOrFail($id);
+            $update= proyek::find($id);
+            // Overwrite image
+        if ($request->hasFile('image')) {
+            $existingImage = proyek::find($id)->image;
+            Storage::disk('public')->delete('images/proyek/' . $existingImage);
 
-            $proyek->update([
-                'name' => $request->name,
-                'type'=>$request->type,
-                'location_code'=>$request->location_code,
-                'description'=>$request->description,
 
+            $fileNameImage = date("Y-m-d-His") . '_' . $request->file('image')->getClientOriginalName();
+            $image = $request->file('image')
+            ->storeAs('public/images/proyek/', $fileNameImage);
+
+
+            $image = Proyek::find($id)->update([
+                'image' => $fileNameImage,
             ]);
-            $data = proyek::where('id', '=', $proyek->id)->get();
-            if($data){
-                return ApiFormatter::createApi(200, 'Success Update' , $data);
-            }else{
-                return ApiFormatter::createApi(400,'Failed');
-    
-            }
-            //code...
-        } catch (Exception $error) {
-            //throw $th;
-            return ApiFormatter::createApi(400, 'Failed');
         }
+            $update->update([
+                'owner_id' => $request->proyek_owner,
+                'name' => $request->proyek_name,
+                'type' => $request->type,
+                'location_code' => $request->location_code,
+                'description' => $request->description,
+                'updated_at' => Carbon::now(),
+            ]);
+            if($update){
+                // Toastr::success('Data berhasil diubah','Berhasil!');
+                return redirect()->route('proyek.index');
+            }else{
+                // Toastr::error('Data gagal diubah, coba lagi','Gagal!');
+                return redirect()->back();
+            }
+    
+      
+            
+            //code...
+        
+        
     }
 
     /**
@@ -146,13 +183,13 @@ class ProyekController extends Controller
      */
     public function destroy($id)
     {
-        $data= proyek::findorFail($id);
-        if($data){
-            $data->delete();
-            return ApiFormatter::createApi(200, 'Success Delete' , $data);
-                
+        $proyek= proyek::findorFail($id);
+        $delete= $proyek->delete();
+        if($delete){
+            return redirect()->route('proyek.index');
         }else{
-            return ApiFormatter::createApi(400, 'Failed');
+            return redirect()->back();
+
         }
     }
 }

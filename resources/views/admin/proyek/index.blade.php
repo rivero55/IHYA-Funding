@@ -40,9 +40,9 @@
                             @foreach ($proyek as $proyeks)
                                 <tr>
                                     <td>{{ $proyeks->name }}</td>
-                                    <td>{{ $proyeks->project_owner->name }}</td>
+                                    <td>{{ $proyeks->proyek_owner->name }}</td>
                                     <td>{{ $proyeks->type }}</td>
-                                    <td>{{Address::getFullAddress($proyeks->location_code)}}</td>
+                                    <td></td>
                                     <td><a href="--{{asset('storage/images/projects/'.$proyeks->image)}}--">{{$proyeks->image}}</a></td>
                                     
                                     <td>{!! $proyeks->description !!}</td>

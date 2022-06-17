@@ -14,7 +14,6 @@ use Illuminate\Support\Facades\Route;
 | is assigned the "api" middleware group. Enjoy building your API!
 |
 */
-Route::get('/proyek', [ProyekController::class, 'create']);
 Route::get('proyek', [ProyekController::class, 'index']);
 Route::post('proyek/store', [ProyekController::class, 'store']);
 Route::get('proyek/show/{id}', [ProyekController::class, 'show']);

@@ -18,4 +18,9 @@ class ProyekOwner extends Model
         'description'
     ];
     protected $hidden= [];
+    
+    public function proyek()
+	{
+		return $this->hasMany(Proyek::class, 'owner_id');
+	}
 }
