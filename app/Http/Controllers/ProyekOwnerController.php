@@ -6,6 +6,8 @@ use App\Models\ProyekOwner;
 use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use App\Helpers\ApiFormatter;
+use Brian2694\Toastr\Facades\Toastr;
+
 class ProyekOwnerController extends Controller
 {
     public function index(){
@@ -33,9 +35,12 @@ class ProyekOwnerController extends Controller
 
         if($store){
             ApiFormatter::createApi(200, 'Success' , $store);
+            Toastr::success('Data berhasil ditambah','Berhasil!');
             return redirect()->route('proyek-owner.index');
         }else{
             ApiFormatter::createApi(400,'Failed');
+            Toastr::error('Data gagal ditambah','Gagal!');
+
             return redirect()->back();
 
         }
@@ -58,9 +63,13 @@ class ProyekOwnerController extends Controller
 
         if($update){
             ApiFormatter::createApi(200, 'Success' , $update);
+            Toastr::success('Data berhasil diubah','Berhasil!');
+
             return redirect()->route('proyek-owner.index');
         }else{
             ApiFormatter::createApi(400,'Failed');
+            Toastr::error('Data gagal diubah','Gagal!');
+
             return redirect()->back();
         }
 
@@ -70,9 +79,11 @@ class ProyekOwnerController extends Controller
         $delete = ProyekOwner::find($id)->delete();
         if($delete){
             ApiFormatter::createApi(200, 'Success' , $delete);
+            Toastr::success('Data berhasil dihapus','Berhasil!');
             return redirect()->route('proyek-owner.index');
         }else{
             ApiFormatter::createApi(400,'Failed');
+            Toastr::error('Data gagal dihapus','Gagal!');
             return redirect()->back();
         }
     }

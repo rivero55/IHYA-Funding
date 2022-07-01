@@ -7,6 +7,7 @@ use App\Http\Controllers\Controller;
 use App\Models\proyek;
 use App\Models\ProyekOwner;
 use App\Models\ProyekType;
+use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 use Exception;
 use Illuminate\Support\Facades\Storage;
@@ -82,7 +83,7 @@ class ProyekController extends Controller
             // Toastr::success('Data berhasil ditambahkan','Berhasil!');
             return redirect()->route('proyek.index');
             }else{
-                // Toastr::error('Data gagal ditambahkan, coba lagi','Gagal!');
+                Toastr::error('Data gagal ditambahkan, coba lagi','Gagal!');
             return redirect()->back()->withInput();
             dd($store);
             }
@@ -161,10 +162,10 @@ class ProyekController extends Controller
                 'updated_at' => Carbon::now(),
             ]);
             if($update){
-                // Toastr::success('Data berhasil diubah','Berhasil!');
+                Toastr::success('Data berhasil diubah','Berhasil!');
                 return redirect()->route('proyek.index');
             }else{
-                // Toastr::error('Data gagal diubah, coba lagi','Gagal!');
+                Toastr::error('Data gagal diubah, coba lagi','Gagal!');
                 return redirect()->back();
             }
     

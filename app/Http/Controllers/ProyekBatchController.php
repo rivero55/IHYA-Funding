@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\proyek;
 use App\Models\ProyekBatch;
+use Brian2694\Toastr\Facades\Toastr;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -60,10 +61,10 @@ class ProyekBatchController extends Controller
             'updated_at' => Carbon::now(),
         ]);
         if ($store) {
-            // Toastr::success('Data berhasil ditambahkan', 'Berhasil!');
+            Toastr::success('Data berhasil ditambahkan', 'Berhasil!');
             return redirect()->route('proyek.show', $proyek_id);
         } else {
-            // Toastr::error('Data gagal ditambahkan, coba lagi', 'Gagal!');
+            Toastr::error('Data gagal ditambahkan, coba lagi', 'Gagal!');
             return redirect()->back();
         }
 
@@ -132,10 +133,10 @@ class ProyekBatchController extends Controller
             ]);
         }
         if ($update) {
-            // Toastr::success('Data berhasil diubah', 'Berhasil!');
+            Toastr::success('Data berhasil diubah', 'Berhasil!');
             return redirect()->route('proyek.show', $proyek_id);
         } else {
-            // Toastr::error('Data gagal diubah, coba lagi', 'Gagal!');
+            Toastr::error('Data gagal diubah, coba lagi', 'Gagal!');
             return redirect()->back();
         }
     }
@@ -152,10 +153,10 @@ class ProyekBatchController extends Controller
         $proyek_batch = ProyekBatch::find($proyek_batch_id);
         $delete = $proyek_batch -> delete();
         if ($delete) {
-            // Toastr::success('Data berhasil diubah', 'Berhasil!');
+            Toastr::success('Data berhasil diubah', 'Berhasil!');
             return redirect()->route('proyek.show', $proyek_id);
         } else {
-            // Toastr::error('Data gagal diubah, coba lagi', 'Gagal!');
+            Toastr::error('Data gagal diubah, coba lagi', 'Gagal!');
             return redirect()->back();
         }
     }
@@ -191,6 +192,8 @@ class ProyekBatchController extends Controller
             // }
 
         }
+        $notif = $request->status == 'funding' ? 'dibuka' : ($request->status == 'ongoing' ? 'dimulai' : ($request->status == 'closed' ? 'ditutup' : ''));
+
         if ($update) {
             // $log = [
             //     'user_id' => Auth::user()->id,
@@ -201,7 +204,7 @@ class ProyekBatchController extends Controller
             //     'updated_at' => Carbon::now(),
             // ];
             // $document = Log::create($log);
-            // Toastr::success('Batch berhasil ' . $notif, 'Berhasil!');
+            Toastr::success('Batch berhasil ' . $notif, 'Berhasil!');
             return redirect()->route('proyek.show', $proyek_id);
         } else {
             // Toastr::error('Batch gagal ' . $notif . ' coba lagi', 'Gagal!');
