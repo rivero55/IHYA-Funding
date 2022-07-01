@@ -3,8 +3,10 @@
 use App\Http\Controllers\AddressController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProyekOwnerController;
+use App\Http\Controllers\ProyekBatchController;
 use App\Http\Controllers\ProyekController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\DonasiController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -21,15 +23,14 @@ use Illuminate\Support\Facades\Auth;
 */
 
 Route::get('/', function () {
-    return view('welcome');
-});
-Route::get('/landing', function () {
     return view('index');
 })->name('landing');
 
-Route::get('/event', [App\Http\Controllers\LandingController::class, 'listevent'])->name('event');
-Route::get('/admin/proyek', function () {
-    return view('admin.proyek.create');})->name('admin.proyek.create');
+Route::prefix('donasi')->group(function(){
+    Route::get('/', [DonasiController::class, 'index'])->name('donation');
+    Route::get('/{id}', [DonasiController::class, 'show'])->name('donation.show');
+    Route::get('/{id}/donasi-amount', [DonasiController::class, 'donasiAmount'])->name('donation.amount');
+});
 
 Route::post('region',[AddressController::class, 'get_data'])->name('region');
 Route::get('region-check',[AddressController::class, 'index'])->name('region-check');
@@ -39,6 +40,9 @@ Route::middleware(['auth', 'checkRole:admin'])->prefix('admin')->group(function(
     Route::get('/', [AdminController::class, 'index'])->name('admin');
     Route::resource('proyek-owner', ProyekOwnerController::class);
     Route::resource('proyek', ProyekController::class);
+    Route::resource('proyek.batch', ProyekBatchController::class);
+    Route::patch('proyek/{proyek_id}/batch/{batch_id}/status/update', [ProyekBatchController::class, 'updateStatus'])->name('proyek.batch.status.update');
+
 
 });
 

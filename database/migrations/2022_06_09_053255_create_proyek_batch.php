@@ -23,7 +23,6 @@ return new class extends Migration
             $table->date('start_date')->nullable();
             $table->date('end_date')->nullable();
             $table->enum('status', ['draft','funding','ongoing','paid','closed']);
-            $table->unsignedDouble('dana_terkumpul')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
