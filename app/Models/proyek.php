@@ -29,6 +29,11 @@ class proyek extends Model
 	{
 		return $this->belongsTo(ProyekOwner::class, 'owner_id');
 	}
+	public function proyek_batches()
+	{
+		return $this->hasMany(ProyekBatch::class);
+	}
+
 
 }
 

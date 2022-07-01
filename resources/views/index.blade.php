@@ -1,4 +1,5 @@
 @extends('layouts.landing')
+@section('title','Berdonasi Lebih Mudah dengan Ihya')
 @section('content')
 <main class="l-main">
             <!--========== HOME ==========-->
@@ -7,7 +8,7 @@
                     <div class="home__data">
                         <h1 class="home__title">IHYA CHARITY</h1>
                         <h2 class="home__subtitle">Donasi dari masyarakat <br> untuk masyarakat.</h2>
-                        <a href="{{route('event')}}" class="button">Lihat Event Berbagi</a>
+                        <a href="{{route('donation')}}" class="button">Lihat Event Berbagi</a>
                     </div>
     
                     <img src="{{asset('assets/img/home.png')}}" alt="" class="home__img">
