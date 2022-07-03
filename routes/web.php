@@ -44,7 +44,7 @@ Route::middleware(['auth', 'checkRole:admin'])->prefix('admin')->group(function(
     Route::resource('proyek.batch', ProyekBatchController::class);
     Route::patch('proyek/{proyek_id}/batch/{batch_id}/status/update', [ProyekBatchController::class, 'updateStatus'])->name('proyek.batch.status.update');
 });
-Route::middleware(['auth', 'checkRole:admin,user,instansi'])->group(function(){ 
+Route::middleware(['auth', 'checkRole:user,instansi,admin'])->group(function(){ 
 
 Route::post('/pay/donation/{proyek_id}/{proyek_batch_id}', [TransactionController::class, 'payDonation'])->name('pay.donation');
 });
