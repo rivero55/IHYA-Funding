@@ -9,5 +9,10 @@ use Illuminate\Http\Request;
 
 class LandingController extends Controller
 {
-   
+    public function index()
+    {
+            $proyek_batch = ProyekBatch::where('status','!=','draft')->limit(6)->get();
+            return view('index')->with(compact('proyek_batch'));
+        
+    }
 }

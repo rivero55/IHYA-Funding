@@ -88,6 +88,7 @@
     <script src="{{ asset('js/sb-admin-2.min.js') }}"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
     @stack('js')
+{!! Toastr::message() !!}
     
 
 </body>

@@ -1,5 +1,16 @@
 @extends('layouts.landing')
 @section('title','Berdonasi Lebih Mudah dengan Ihya')
+@php
+use Carbon\Carbon;
+Carbon::setLocale('id');
+@endphp
+@push('css')
+<style>
+.filter-green{
+    filter: invert(42%) sepia(54%) saturate(585%) hue-rotate(100deg) brightness(89%) contrast(93%);
+    }
+    </style>
+@endpush
 @section('content')
 <main class="l-main">
             <!--========== HOME ==========-->
@@ -7,28 +18,107 @@
                 <div class="home__container bd-container bd-grid">
                     <div class="home__data">
                         <h1 class="home__title">IHYA CHARITY</h1>
-                        <h2 class="home__subtitle">Donasi dari masyarakat <br> untuk masyarakat.</h2>
-                        <a href="{{route('donation')}}" class="button">Lihat Event Berbagi</a>
-                    </div>
-    
-                    <img src="{{asset('assets/img/home.png')}}" alt="" class="home__img">
-                </div>
-            </section>
-            
-            <!--========== ABOUT ==========-->
-            <section class="about section bd-container" id="about">
-                <div class="about__container  bd-grid">
-                    <div class="about__data">
-                        <span class="section-subtitle about__initial">Tentang Kami</span>
                         <h2 class="section-title about__initial">Bersedekah Dengan IHYA</h2>
                         <p class="about__description"> Bersedekah semakin mudah, transparan, dan terpacaya bersama IHYA yang sudah terjamin</p>
-                        <a href="#" class="button">Explore history</a>
+                        <a href="{{route('donation')}}" class="button">Lihat Penggalangan Dana</a>
                     </div>
-
-                    <img src="assets/img/about.jpg" alt="" class="about__img">
+    
+                    <img src="{{asset('assets/img/landing/Chrity.png')}}" alt="" class="home__img">
                 </div>
             </section>
 
+            <!--========== Features ==========-->
+
+            <section class="services section bd-container pt-0" id="services">
+
+                <div class="services__container  bd-grid  card shadow" style="border-radius: 10px">
+                    <div class="services__content py-5 ">
+                    <img src="{{asset('assets/img/landing/dollar.png')}}" style="width:120px;"alt="" class="home__img filter-green">
+                     
+                        <h3 class="services__title mt-2">Donasi</h3>
+                        <p class="services__description">Berbagi & Membantu Dengan Sesama </p>
+                        <a href="{{route('donation')}}" style="color:#198754 !important" >Lihat Event Donasi</a>
+
+                    </div>
+
+                    <div class="services__content py-5 ">
+                    <img src="{{asset('assets/img/landing/donate.svg')}}" style="width:120px;" alt="" class="home__img filter-green">
+                        
+                        <h3 class="services__title mt-2">Zakat</h3>
+                        <p class="services__description">Sempurnakan Hukum Islam-mu </p>
+                        <a href="{{route('donation')}}" style="color:#198754 !important" >Bayar Zakat</a>
+
+                    </div>
+
+                    <div class="services__content py-5 ">
+                    <img src="{{asset('assets/img/landing/moneybag.png')}}" style="width:120px;"alt="" class="home__img filter-green">
+                        
+                        <h3 class="services__title mt-2">Galang Dana</h3>
+                        <p class="services__description">Bantu Sesama Dengan proyek penggalangan danamu</p>
+                        <a href="{{route('donation')}}" style="color:#198754 !important">Buat Penggalangan Dana</a>
+
+                    </div>
+                </div>
+            </section>
+            <!--========== Proyek Donasi==========-->
+
+        <section class="services section bd-container" id="services">
+        
+                
+                <div class="row about__data">
+                <span class="section-subtitle">Proyek</span>
+                <h2 class="section-title">Penggalangan Dana</h2>
+                @foreach ($proyek_batch as $data)
+        <div class="col-md-6 col-lg-4 col-12 mt-md-5">
+            <div class="card rounded-top h-100">
+                <img class="card-img-top" src="{{ asset('storage/images/proyek/'.$data->proyek->image) }}"
+                    alt="Card image cap">
+                <div class="card-body  d-flex flex-column">
+                    <h5 class="card-title">{{ $data->fullName()}}</h5>
+                    <div class="mt-auto">
+                        
+                            <div class="d-flex justify-content-between align-items-center mb-2" id="landing-projek-paragraph">
+                            <p class="float-left mb-0">Penggalang</p>
+                            <p class="float-right mb-0 card-text fw-bold">{{ $data->proyek->proyek_owner->name}}</p>
+                        </div>
+                        <p class=""><span class="fw-bold"> 
+                                 Rp {{number_format($data->totalDonations(),0,",",".")}}</span>  Terdanai
+                        </p>
+                        <div class="progress mb-3">
+                            <div class="progress-bar" style="width:{{ $data->totalPercentage() }}% ;background-color:#198754;" role="progressbar"
+                                aria-valuenow="{{ $data->totalPercentage() }}" aria-valuemin="0" aria-valuemax="100">
+                            </div>
+                        </div>
+                        <a class="d-none" href="#"></a>
+                        <div class="d-flex justify-content-between align-items-center" id="landing-projek-paragraph">
+                            <p class="float-left mb-0">Ditutup Pada</p>
+                            <p class="float-right mb-0">Tersisa</p>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center" id="landing-projek-paragraph">
+                            <p class="text-muted mb-1">
+                                {{Carbon::parse($data->end_date)->isoFormat('D MMMM Y')}}</p>
+                            <p class="text-muted mb-1">{{$daysleft=$data->daysLeft() == 0 ? "Hari Terakhir" : (($data->daysLeft() == "close") ? "Ditutup" : $data->daysLeft().' Hari Lagi' )}} </p>
+                        </div>
+                    </div>
+
+                        @if ($data->isFullyFunded())
+                        <a type="button" class="btn btn-outline-success mt-2" href="{{route('donation.show', $data->id)}}">Lihat Detail</a>
+                        <a class="btn btn-secondary btn-block mt-2 " disabled>Donasi ditutup</a>
+                        
+                        
+                        @else
+                        <a type="button" class="btn btn-outline-success mt-2" href="{{route('donation.show', $data->id)}}">Lihat Detail</a>
+
+                        <a type="submit" class="btn btn-success mt-2 btn-block" href="{{route('donation.amount',[$data->proyek->id,$data->id])}}">Donasi</a>
+                        @endif
+                </div>
+            </div>
+        </div>
+        @endforeach
+        </div>
+            </section>
+
+            
             <!--========== SERVICES ==========-->
             <section class="services section bd-container" id="services">
                 <span class="section-subtitle">Pelayanan</span>

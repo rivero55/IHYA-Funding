@@ -34,7 +34,8 @@ class LoginController extends Controller
         if (Auth::user()->role == 'admin') {
             return route('admin');
         }
-        return route('landing');
+        $test = url()->previous();
+        return $test;
     }
 
     /**

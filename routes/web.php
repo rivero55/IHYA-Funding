@@ -7,6 +7,8 @@ use App\Http\Controllers\ProyekBatchController;
 use App\Http\Controllers\ProyekController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\DonasiController;
+use App\Http\Controllers\LandingController;
+use App\Http\Controllers\TransactionController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -22,14 +24,13 @@ use Illuminate\Support\Facades\Auth;
 |
 */
 
-Route::get('/', function () {
-    return view('index');
-})->name('landing');
+
+Route::get('/', [LandingController::class, 'index'])->name('landing');
 
 Route::prefix('donasi')->group(function(){
     Route::get('/', [DonasiController::class, 'index'])->name('donation');
     Route::get('/{id}', [DonasiController::class, 'show'])->name('donation.show');
-    Route::get('/{id}/donasi-amount', [DonasiController::class, 'donasiAmount'])->name('donation.amount');
+    Route::get('/donasi-amount/{id}/{batch_id}', [DonasiController::class, 'donasiAmount'])->name('donation.amount');
 });
 
 Route::post('region',[AddressController::class, 'get_data'])->name('region');
@@ -42,10 +43,16 @@ Route::middleware(['auth', 'checkRole:admin'])->prefix('admin')->group(function(
     Route::resource('proyek', ProyekController::class);
     Route::resource('proyek.batch', ProyekBatchController::class);
     Route::patch('proyek/{proyek_id}/batch/{batch_id}/status/update', [ProyekBatchController::class, 'updateStatus'])->name('proyek.batch.status.update');
+});
+Route::middleware(['auth', 'checkRole:admin,user,instansi'])->group(function(){ 
 
-
+Route::post('/pay/donation/{proyek_id}/{proyek_batch_id}', [TransactionController::class, 'payDonation'])->name('pay.donation');
 });
 
 Auth::routes();
 
+Route::get('/redirects', function(){
+	// You can replace above line with the following to return to previous page
+	return redirect()->back()->getTargetUrl();
+})->name(('redirects'));
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');

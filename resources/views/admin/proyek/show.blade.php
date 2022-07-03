@@ -165,7 +165,6 @@ Carbon::setLocale('id');
 @endpush
 @push('js')
 
-{!! Toastr::message() !!}
 
 @include('admin.plugins.dataTables-js')
 @include('admin.plugins.dataTables-set-js')
