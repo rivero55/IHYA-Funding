@@ -40,6 +40,9 @@ body {
     @endif
     <div class="row mt-2">
         <div class="col-6 offset-3 card">
+            <form action="{{ route('pay.donation', [$proyek_batch->proyek->id, $proyek_batch->id]) }}"
+                                    method="POST" enctype="multipart/form-data">
+            @csrf
             <div class="mt-4">
                 <label for="formGroupExampleInput" class="form-label fw-bold">
                     <h4 class="">Masukan Nominal Donasi</h4>
@@ -48,54 +51,53 @@ body {
             <div class="input-group">
                 <div class="input-group-text">Rp</div>
                 <input type="tel" class="form-control" id="autoSizingInputGroup"
-                    placeholder="Masukan Nominal Uang Donasi Anda">
+                    placeholder="Masukan Nominal Uang Donasi Anda" name="nominal" id="nominal" >
             </div>
             <div class="row card-body">
-                <button class="col-lg btn btn-outline-success rounded-pill mx-lg-1 my-2" type="" id="">10.000</button>
-                <button class="col-lg btn btn-outline-success rounded-pill mx-lg-1 my-2" type="" id="">30.000</button>
-                <button class="col-lg btn btn-outline-success rounded-pill mx-lg-1 my-2" type="" id="">50.000</button>
-                <button class="col-lg btn btn-outline-success rounded-pill mx-lg-1 my-2" type="" id="">100.000</button>
-                <button class="col-lg btn btn-outline-success rounded-pill mx-lg-1 my-2" type="" id="">200.000</button>
+                <button type="button" class="col-lg btn btn-outline-success rounded-pill mx-lg-1 my-2 donation-amount" >10.000</button >
+                <button type="button" class="col-lg btn btn-outline-success rounded-pill mx-lg-1 my-2 donation-amount" >30.000</button>
+                <button type="button" class="col-lg btn btn-outline-success rounded-pill mx-lg-1 my-2 donation-amount" >50.000</button>
+                <button type="button" class="col-lg btn btn-outline-success rounded-pill mx-lg-1 my-2 donation-amount" >100.000</button>
+                <button type="button" class="col-lg btn btn-outline-success rounded-pill mx-lg-1 my-2 donation-amount" >200.000</button>
             </div>
             <div class="my-1" id="metode-pembayaran">
-                <label for="formGroupExampleInput" class="form-label fw-bold">
+                <label for="formGroupExamplebutton" class="form-label fw-bold">
                     <h4 class="">Pilih Metode Pembayaran</h4>
                 </label>
                 <div class="accordion" id="accordionExample">
+                    
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingOne">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseOne" aria-controls="collapseOne">
                                 Transfer Bank
                             </button>
                         </h2>
-                        <div id="collapseOne" class="accordion-collapse collapse show" aria-labelledby="headingOne"
+                        <div id="collapseOne" class="accordion-collapse collapse" aria-labelledby="headingOne"
                             data-bs-parent="#accordionExample">
                             <div class="accordion-body">
                                 <div class="row pb-5">
                                     <div class="col-12 w-100">
                                         <label class="d-inline">
-                                            <input type="radio" class="btn-check" name="options-outlined"
-                                                value="E-Money, Tranfer Bank, Dan Lain Lain" id="first-payment"
-                                                autocomplete="off" checked>
+                                            <input type="radio" class="btn-check" name="payment_method"
+                                                value="Transfer Bank" id="first-payment"
+                                                autocomplete="off" >
                                             <label class="btn btn-outline-success w-100 py-2 card-input"
                                                 for="first-payment" id="wallet-card-methodpayment">
                                                 <img src="{{asset('assets/img/logo.png')}}" style="width:40px"
-                                                    class="center"></img>
-
-                                                Bca
+                                                    class="center"></img> Bca
                                             </label>
                                         </label>
 
                                     </div>
                                     <div class="col-12 w-100 pt-2">
                                         <label class="d-inline">
-                                            <input type="radio" class="btn-check" name="options-outlined"
-                                                value="E-Money, Tranfer Bank, Dan Lain Lain" id="success-outlined"
+                                            <input type="radio" class="btn-check" name="payment_method"
+                                                value="Transfer Bank" id="second-payment-tranferbank"
                                                 autocomplete="off">
                                             <label
-                                                class="btn btn-outline-success card py-2 card-input text-radio text-center"
-                                                for="success-outlined" id="wallet-card-methodpayment">Transfer
+                                                class="btn btn-outline-success w-100 card-input"
+                                                for="second-payment-tranferbank" id="wallet-card-methodpayment">Transfer
                                             </label>
                                         </label>
                                     </div>
@@ -103,6 +105,32 @@ body {
                             </div>
                         </div>
                     </div>
+                    @if(!Auth::guest())
+                    <div class="accordion-item">
+                        <h2 class="accordion-header" id="headingThree">
+                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
+                                data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
+                                Wallet
+                            </button>
+                        </h2>
+                        <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree"
+                            data-bs-parent="#accordionExample">
+                            <div class="accordion-body">
+                             
+                            <input type="radio" class="btn-check" name="payment_method"
+                                                value="wallet" id="wallet"
+                                                autocomplete="off">
+                                            <label
+                                                class="btn btn-outline-success card py-2 card-input text-radio text-center"
+                                                for="wallet" id="wallet-card-methodpayment"> <p class="mb-0">Wallet</p>
+                                    <span class="">Saldo Anda : Rp
+                                        {{number_format(Auth::user()->balance,0,",",".")}}</span>
+                                            </label>
+                                </div>
+                               
+                        </div>
+                    </div>
+                    
                     <div class="accordion-item">
                         <h2 class="accordion-header" id="headingTwo">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
@@ -117,44 +145,43 @@ body {
                             </div>
                         </div>
                     </div>
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingThree">
-                            <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
-                                Minimarket
-                            </button>
-                        </h2>
-                        <div id="collapseThree" class="accordion-collapse collapse" aria-labelledby="headingThree"
-                            data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
-
-                            </div>
-                        </div>
-                    </div>
+                
                 </div>
             </div>
+            <div class="text-center py-4"> Data Diri Anda </div>
+            <p class="fw-bold">{{Auth::user()->name}}</p>
+            <span class="">{{Auth::user()->email}}</span>
+            
+            @else
+            
+            
             <div class="text-center py-4"><a href="{{route('login')}}" style="color:#198754">Login</a> atau Isi Data
                 Diri dibawah ini</div>
             <div class="my-1">
                 <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com">
+                    <input type="email" class="form-control" id="floatingInput" placeholder="name@example.com" name="nama" required>
                     <label for="floatingInput">Nama</label>
                 </div>
                 <div class="form-floating mb-3">
-                    <input type="email" class="form-control" id="floatingemail" placeholder="email">
-                    <label for="floatingemail">Password</label>
+                    <input type="email" class="form-control" id="floatingemail" placeholder="email" name="email" required>
+                    <label for="floatingemail">Email</label>
                 </div>
+             @endif
+
                 <div class="form-check form-switch d-flex justify-content-between ps-0">
                     <label class="form-check-label" for="flexSwitchCheckDefault">Sembunyikan nama saya (donasi
                         anonim)</label>
-                    <input class="form-check-input" type="checkbox" id="flexSwitchCheckDefault">
+                    <input class="form-check-input" type="checkbox" name="anonim" id="flexSwitchCheckDefault">
                 </div>
+                
                 <div class="mb-3">
                     <label for="exampleFormControlTextarea1" class="form-label">Doa (Opsional)</label>
-                    <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+                    <textarea class="form-control" id="exampleFormControlTextarea1" name="message" rows="3"></textarea>
                 </div>
+                <button type="submit" class="btn btn-success d-block my-2 w-100">Bayar</button>
             </div>
-            <button class="btn btn-success d-block my-2">Bayar</button>
+            
+</form>
 
         </div>
 
@@ -183,38 +210,13 @@ input[type=number] {
 
 
 <script>
-function sticky_relocate() {
-    var window_top = $(window).scrollTop();
-    var footer_top = $("#footer").offset().top;
-    var div_top = $('#container').offset().top + $('#container')
-        .height();
-    var div_height = $("#sticky-sidebar").height();
 
-    var padding = 60;
 
-    if (window_top + div_height > footer_top - padding) {
-        $('#sticky-sidebar').css({
-            top: (window_top + div_height - footer_top +
-                padding) * -1
-        });
-    } else if (window_top > div_top) {
-        $('#sticky-sidebar').addClass('stick');
-        $('#sticky-sidebar').css({
-            top: 70
-        });
-    } else {
-        $('#sticky-sidebar').removeClass('stick');
-        $('#sticky-sidebar').css({
-            top: 70
-        });
+$('.donation-amount').click(function(){
+    let hei=$('input[name=nominal]').val($(this).text().replace('.',''));
+console.log(hei);
 
-    }
-}
-$(function() {
-    $(window).scroll(sticky_relocate);
-    sticky_relocate();
 });
 </script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 
 @endpush

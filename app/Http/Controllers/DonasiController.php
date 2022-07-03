@@ -21,10 +21,11 @@ class DonasiController extends Controller
             return view('donation.donation')->with(compact('types','proyek_batch'));
         
     }
-    public function donasiAmount($id)
+    public function donasiAmount($proyek_id,$proyek_batch_id)
     {
-            $types = ProyekType::find($id);
-            return view('donation.donation-amount')->with(compact('types'));
+            $proyek = proyek::find($proyek_id);
+            $proyek_batch= ProyekBatch::find($proyek_batch_id);
+            return view('donation.donation-amount')->with(compact('proyek','proyek_batch'));
         
     }
     /**

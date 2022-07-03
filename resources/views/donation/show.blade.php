@@ -1,5 +1,7 @@
 @extends('layouts.landing')
-@section('title', 'Donasi')
+@section('title', 'Donasi Detail')
+@section('css')
+
 @section('content')
 @php
 use Carbon\Carbon;
@@ -13,7 +15,7 @@ body {
 }
     </style>
 @endpush
-<div class="container" id="container">
+<div class="container">
     @if ($errors->any())
     <div class="alert alert-danger">
         <strong>Whoops!</strong> There were some problems with your input.<br><br>
@@ -44,8 +46,8 @@ body {
 
                         <div class="d-flex justify-content-between align-items-center ">
                             <p class="float-left mb-2">Donasi berakhir <span class="fw-bold">
-                                    {{$proyek_batch->daysLeft()}} </span>
-                                hari lagi</p>
+                                    {{$daysleft=$proyek_batch->daysLeft() == 0 ? "Hari ini" : (($proyek_batch->daysLeft() == "close") ? "" : $proyek_batch->daysLeft().' Hari Lagi' )}} </span>
+                                </p>
                             <p class="float-right mb-2"><span class="fw-bold">{{$proyek_batch->countDonations()}}
                                 </span>
                                 <span id="text-low">Donasi</span>
@@ -112,13 +114,9 @@ body {
                         <div class="my-3 row">
                             <div class="col">
                                 <div class="d-grid">
-                                    @guest
-                                    <a type="button" class="btn btn-success" id="donasinoLogin" href="{{route('login')}}">Mulai Donasi</a>
-                                  
-                                    @else
-                                    <a type="button" class="btn btn-success" id="donasinoLogin" href="{{route('donation.amount',$proyek_batch->id)}}"
+                                    
+                                    <a type="button" class="btn btn-success" id="donasinoLogin" href="{{route('donation.amount',[$proyek_batch->proyek->id,$proyek_batch->id])}}"
                                         >Mulai Donasi</a>
-                                    @endguest
                                 </div>
                             </div>
                         </div>
@@ -151,58 +149,3 @@ body {
 </div>
 
 @endsection
-@push('css')
-<style>
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-    margin: 0;
-}
-
-/* Firefox */
-input[type=number] {
-    -moz-appearance: textfield;
-    text-align: center;
-}
-</style>
-@endpush
-@push('js')
-
-
-<script>
-function sticky_relocate() {
-    var window_top = $(window).scrollTop();
-    var footer_top = $("#footer").offset().top;
-    var div_top = $('#container').offset().top + $('#container')
-        .height();
-    var div_height = $("#sticky-sidebar").height();
-
-    var padding = 60;
-
-    if (window_top + div_height > footer_top - padding) {
-        $('#sticky-sidebar').css({
-            top: (window_top + div_height - footer_top +
-                padding) * -1
-        });
-    } else if (window_top > div_top) {
-        $('#sticky-sidebar').addClass('stick');
-        $('#sticky-sidebar').css({
-            top: 70
-        });
-    } else {
-        $('#sticky-sidebar').removeClass('stick');
-        $('#sticky-sidebar').css({
-            top: 70
-        });
-
-    }
-}
-$(function() {
-    $(window).scroll(sticky_relocate);
-    sticky_relocate();
-});
-</script>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-
-@endpush

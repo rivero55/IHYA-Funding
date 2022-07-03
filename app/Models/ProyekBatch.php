@@ -37,8 +37,8 @@ class ProyekBatch extends Model
         return $this->belongsTo(proyek::class)->withTrashed();
     }
 	public function daysLeft(){
-		$daysLeft = Carbon::parse(Carbon::now())->diffInDays($this->end_date,false);
-		return $daysLeft >= 0 ? $daysLeft: 0;
+		$daysLeft = Carbon::parse(Carbon::today())->diffInDays($this->end_date,false);
+		return $daysLeft >= 0 ? $daysLeft: "close";
 	}
 
 	public function user_donations()
@@ -69,7 +69,7 @@ class ProyekBatch extends Model
 	}
 	public function isFullyFunded()
 	{
-		$isFullyFunded = ($this->totalPercentage() >= 100) || ($this->status != 'funding');
+		$isFullyFunded = ($this->end_date->endofday()->isPast()) || ($this->status != 'funding');
 		return $isFullyFunded;
 	}
 }

@@ -29,12 +29,15 @@ Carbon::setLocale('id');
                 <img class="card-img-top" src="{{ asset('storage/images/proyek/'.$data->proyek->image) }}"
                     alt="Card image cap">
                 <div class="card-body  d-flex flex-column">
-                    <h4 class="card-title">{{ $data->fullName()}}</h4>
+                    <h5 class="card-title">{{ $data->fullName()}}</h5>
                     <div class="mt-auto">
-                        <p class="card-text">
-                            {{ $data->proyek->proyek_owner->name}}</p>
-                        <p class=""><span class="text-pendanaan mt-2"> 
-                                 Rp {{number_format($data->totalDonations(),0,",",".")}}<span> Terdanai</span> 
+                        
+                            <div class="d-flex justify-content-between align-items-center mb-2" id="landing-projek-paragraph">
+                            <p class="float-left mb-0">Penggalang</p>
+                            <p class="float-right mb-0 card-text fw-bold">{{ $data->proyek->proyek_owner->name}}</p>
+                        </div>
+                        <p class=""><span class="fw-bold"> 
+                                 Rp {{number_format($data->totalDonations(),0,",",".")}}</span>  Terdanai
                         </p>
                         <div class="progress mb-3">
                             <div class="progress-bar" style="width:{{ $data->totalPercentage() }}% ;background-color:#198754;" role="progressbar"
@@ -49,12 +52,20 @@ Carbon::setLocale('id');
                         <div class="d-flex justify-content-between align-items-center" id="landing-projek-paragraph">
                             <p class="text-muted mb-1">
                                 {{Carbon::parse($data->end_date)->isoFormat('D MMMM Y')}}</p>
-                            <p class="text-muted mb-1">{{$data->daysLeft()}} hari lagi</p>
+                            <p class="text-muted mb-1">{{$daysleft=$data->daysLeft() == 0 ? "Hari Terakhir" : (($data->daysLeft() == "close") ? "Ditutup" : $data->daysLeft().' Hari Lagi' )}} </p>
                         </div>
                     </div>
 
+                        @if ($data->isFullyFunded())
                         <a type="button" class="btn btn-outline-success mt-2" href="{{route('donation.show', $data->id)}}">Lihat Detail</a>
-                        <button type="submit" class="btn btn-success mt-2 btn-block">Donasi</button>
+                        <a class="btn btn-secondary btn-block mt-2 " disabled>Donasi ditutup</a>
+                        
+                        
+                        @else
+                        <a type="button" class="btn btn-outline-success mt-2" href="{{route('donation.show', $data->id)}}">Lihat Detail</a>
+
+                        <a type="submit" class="btn btn-success mt-2 btn-block" href="{{route('donation.amount',[$data->proyek->id,$data->id])}}">Donasi</a>
+                        @endif
                 </div>
             </div>
         </div>
