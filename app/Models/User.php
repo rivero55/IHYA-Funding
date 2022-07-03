@@ -21,7 +21,8 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
-        'role'
+        'role',
+        'balance'
     ];
 
     /**
@@ -42,4 +43,16 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    
+    public function minusBalance($nominal){
+		$balance_now = $this->balance - $nominal;
+		if($balance_now>=0){
+			$update = $this->update([
+				'balance' => $balance_now
+			]);
+			return $update;
+		}
+
+		return false;
+	}
 }

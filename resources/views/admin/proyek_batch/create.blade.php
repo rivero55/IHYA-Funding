@@ -113,4 +113,5 @@
             $('#end_date').attr("min", $('#start_date').val())
         });
     </script>
+
 @endpush
