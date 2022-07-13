@@ -55,7 +55,7 @@ Carbon::setLocale('id');
                         
                         <h3 class="services__title mt-2">Galang Dana</h3>
                         <p class="services__description">Bantu Sesama Dengan proyek penggalangan danamu</p>
-                        <a href="{{route('donation')}}" style="color:#198754 !important">Buat Penggalangan Dana</a>
+                        <a href="{{route('funding.index')}}" style="color:#198754 !important">Buat Penggalangan Dana</a>
 
                     </div>
                 </div>

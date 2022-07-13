@@ -38,7 +38,7 @@ Carbon::setLocale('id');
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach ($proyek->proyek_batches as $proyek_batch)
+                            @foreach ($proyek->proyek_batch as $proyek_batch)
                             <tr>
                                 <td>{{ $proyek_batch->batch_no }}</td>
                                 <td>Rp. {{ number_format($proyek_batch->minimum_fund,0,",",".") }}</td>

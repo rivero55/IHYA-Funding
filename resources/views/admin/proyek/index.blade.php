@@ -42,9 +42,8 @@
                                     <td>{{ $proyeks->name }}</td>
                                     <td>{{ $proyeks->proyek_owner->name }}</td>
                                     <td>{{ $proyeks->type }}</td>
-                                    <td></td>
-                                    <td><a href="--{{asset('storage/images/projects/'.$proyeks->image)}}--">{{$proyeks->image}}</a></td>
-                                    
+                                    <td>{{ empty($proyeks->location_code) ? $proyeks->location:$proyeks->location_code }}</td>
+                                    <td><a href="{{asset('storage/images/proyek/'.$proyeks->image)}}">{{$proyeks->image}}</a></td>
                                     <td>{!! $proyeks->description !!}</td>
                                     <td class="text-center">
                                         <form action="{{ route('proyek.destroy', $proyeks->id) }}"
