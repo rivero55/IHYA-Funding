@@ -27,7 +27,12 @@ class TransactionController extends Controller
 
         //hitung nominal
         $nominal = $request-> nominal;
-
+        $maks_fund= $proyek_batch->maximum_fund; 
+        if ($nominal > $maks_fund ) {
+            //cek saldo
+                Toastr::error('Tidak boleh melebihi Rp. '.number_format($maks_fund,0,",",".") , 'Gagal!');
+                return redirect()->back();
+        }
         //cek saldo jika pake wallet
         if ($request->payment_method == 'wallet') {
             //cek saldo
