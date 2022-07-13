@@ -50,6 +50,17 @@ background: linear-gradient(180deg, rgba(9,193,58,1) 0%, rgba(5,119,51,1) 100%);
             <span>Product</span></a>
     </li>
 
+    <hr class="sidebar-divider">
+
+        <div class="sidebar-heading">
+            User Verification
+        </div>
+    <li class="nav-item ">
+        <a class="nav-link" href="{{route('verification_proyek')}}">
+            <i class="fab fa-product-hunt"></i>
+            <span>Verifikasi Proyek User</span></a>
+    </li>
+
     
 
 
