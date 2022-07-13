@@ -43,6 +43,22 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function donations()
+	{
+		return $this->hasMany(UserDonation::class);
+	}
+
+	public function profile()
+	{
+		return $this->hasOne(UserProfile::class);
+	}
+    public function transactions()
+	{
+		return $this->hasMany(Transaction::class);
+	}
+    public function proyek_owner(){
+        return $this->hasOne(ProyekOwner::class);
+    }
     
     public function minusBalance($nominal){
 		$balance_now = $this->balance - $nominal;

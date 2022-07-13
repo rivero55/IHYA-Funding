@@ -15,6 +15,7 @@ class ProyekOwner extends Model
     protected $table='proyek_owner';
     protected $fillable = [
         'name',
+        'user_id',
         'description'
     ];
     protected $hidden= [];
@@ -22,5 +23,9 @@ class ProyekOwner extends Model
     public function proyek()
 	{
 		return $this->hasMany(Proyek::class, 'owner_id');
+	}
+    public function user()
+	{
+		return $this->belongsTo(user::class);
 	}
 }
