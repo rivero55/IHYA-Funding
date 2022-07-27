@@ -11,6 +11,10 @@ Carbon::setLocale('id');
 
 <hr>
 <h5> Proyek Batch </h5>
+<label for="uploadKTP" class="col-sm-12 col-form-label">
+    Foto Proyek </label>
+<div class="col-sm-12 col-form-label"><img class="img-fluid" style="height:200px;"
+        src="{{asset('storage/images/proyek/'.$proyek_batch->proyek->image)}}" alt="your image" /></div>
 <label for="DataNIK" class="col-sm-12 col-form-label">Batch ke: <span class="card-text font-weight-bold">{{$proyek_batch ->batch_no}}</span></label>
 <label for="DataNIK" class="col-sm-12 col-form-label">Minimal Donasi: <span class="card-text font-weight-bold">Rp. {{ number_format($proyek_batch->minimum_fund,0,",",".") }}</span></label>
 <label for="DataNIK" class="col-sm-12 col-form-label">Maksimal Donasi: <span class="card-text font-weight-bold">{{ empty($proyek_batch->maximum_fund) ? '-':'Rp. '. number_format($proyek_batch->maximum_fund,0,",",".")}}</span></label>

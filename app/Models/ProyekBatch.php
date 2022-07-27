@@ -31,6 +31,9 @@ class ProyekBatch extends Model
 		'start_date',
 		'end_date',
 		'status',
+		'verification_status',
+		'verified_at',
+		'verification_feedback'
 	];
 
     public function proyek(){
@@ -54,6 +57,11 @@ class ProyekBatch extends Model
 	{
 		return $this->user_donations()->count();
 	}
+
+	public function count()
+{
+    return ($this->verification_status == "accepted");
+}
 
 
 	public function totalPercentage()

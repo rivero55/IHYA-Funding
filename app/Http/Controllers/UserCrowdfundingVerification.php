@@ -39,6 +39,7 @@ class UserCrowdfundingVerification extends Controller
         $profile = ProyekBatch::find($request->proyek_batch_id);
 
         $update = $profile->update([
+            'status' => 'funding',
             'verification_status' => 'accepted',
             'verified_at' => Carbon::now(),
             'verification_feedback' => null,
@@ -65,11 +66,11 @@ class UserCrowdfundingVerification extends Controller
 
     public function userVerificationReject(Request $request){
         $validatedData = $request->validate([
-            'profile_id' => 'required',
+            'proyek_batch_id' => 'required',
             'verification_feedback' => 'required|string'
         ]);
 
-        $profile = UserProfile::find($request->profile_id);
+        $profile = ProyekBatch::find($request->proyek_batch_id);
 
         $update = $profile->update([
             'verification_status' => 'rejected',

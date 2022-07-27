@@ -28,6 +28,7 @@ class ProyekOwnerController extends Controller
 
         $store = ProyekOwner::insert([
             'name' => $request->name,
+            'user_id' => $request->null,
             'description' => $request->description,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),

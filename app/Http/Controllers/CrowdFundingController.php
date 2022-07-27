@@ -30,11 +30,12 @@ class CrowdFundingController extends Controller
         $user_crowdfunding_active = ProyekBatch::whereIn('proyek_id', $proyek ?? 0)->where('status', 'funding' )->get();
         $user_crowdfunding_rejected= ProyekBatch::whereIn('proyek_id', $proyek ?? 0)->where('verification_status', 'rejected' )->get();
         $user_crowdfunding_review= ProyekBatch::whereIn('proyek_id', $proyek ?? 0)->where('verification_status', 'process' )->get();
+        $user_crowdfunding_closed= ProyekBatch::whereIn('proyek_id', $proyek ?? 0)->where('status', 'closed' )->get();
         // dd($user_crowdfunding);
         // $portofolio_progress = UserDonation::where('user_id', $user->id)->whereHas('project_batch', function($query){
         //     $query->whereNotIn('status', ['paid', 'closed']);
         // })->get();
-        return view('funding.funding', compact('user_crowdfunding','user_crowdfunding_active','user_crowdfunding_rejected','user_crowdfunding_review'));
+        return view('funding.funding', compact('user','user_crowdfunding','user_crowdfunding_active','user_crowdfunding_rejected','user_crowdfunding_review','user_crowdfunding_closed'));
     }
 
     /**
@@ -45,10 +46,12 @@ class CrowdFundingController extends Controller
     public function create()
     {
         //
+        $user=Auth::user();
         $proyek_types=ProyekType::all();
-        $proyek_owners=ProyekOwner::all();
+        $proyek_owners=ProyekOwner::where('user_id', $user->id)->first();
+        $user_profile=UserProfile::where('user_id', $user->id)->first();
     
-        return view('funding.create',compact('proyek_types','proyek_owners'));
+        return view('funding.create',compact('proyek_types','proyek_owners','user_profile'));
 
     }
 

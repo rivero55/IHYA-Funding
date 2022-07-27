@@ -18,6 +18,9 @@ body {
 .border-left-failed {
     border-left: 5px solid red;
 }
+.border-left-progress {
+    border-left: 5px solid orange;
+}
 .nav-link{
     color:#4CAF50 !important;
 }
@@ -81,7 +84,7 @@ body {
                         <div class="tab-pane fade show active" id="semua" role="tabpanel" aria-labelledby="semua-tab">
                             
                             @forelse ($user_crowdfunding->sortByDesc('created_at') as $portofolio)
-                            <div class="card border-left-success shadow h-100 mb-2 rounded">
+                            <div class="card border-left-{{($portofolio->verification_status == 'rejected') ? 'failed' : (($portofolio->verification_status == 'process') ? 'progress' : 'success')}} success shadow h-100 mb-2 rounded">
                                 <div class="card-body">
                                     <div class="row pb-3 ">
                                         <div class="col-md-4 mt-2 text-size-Portofolio-Transaksi-title text-muted">Nama
@@ -97,10 +100,10 @@ body {
                                             </div>
                                         </div>
 
-                                        <div class="col-md mt-2 text-size-Portofolio-Transaksi-title text-muted">Dana
-                                            Anda
+                                        <div class="col-md mt-2 text-size-Portofolio-Transaksi-title text-muted">Target Dana
+                                            
                                             <div class="col pt-2 text-nowrap">
-                                                <h6 class="fw-bolder"><span>Rp</span> {{$portofolio->target_nominal}}
+                                                <h6 class="fw-bolder"><span>Rp</span> {{ number_format($portofolio->target_nominal,0,",",".") }}
                                                 </h6>
                                             </div>
                                         </div>
@@ -139,7 +142,7 @@ body {
 
                         </div>
                         <div class="tab-pane fade" id="aktif" role="tabpanel" aria-labelledby="aktif-tab">
-                            @forelse ($user_crowdfunding_active as $portofolio)
+                            @forelse ($user_crowdfunding_active->sortByDesc('created_at') as $portofolio)
                             <div class="card border-left-success shadow h-100 mb-2 rounded">
                                 <div class="card-body">
                                     <div class="row pb-3 ">
@@ -195,12 +198,64 @@ body {
 
                         </div>
                         <div class="tab-pane fade" id="akhir" role="tabpanel" aria-labelledby="akhir-tab">
+                        @forelse ($user_crowdfunding_closed->sortByDesc('created_at')  as $portofolio)
+                            <div class="card border-left-success shadow h-100 mb-2 rounded">
+                                <div class="card-body">
+                                    <div class="row pb-3 ">
+                                        <div class="col-md-4 mt-2 text-size-Portofolio-Transaksi-title text-muted">Nama
+                                            Proyek
+                                            <div class="col pt-2">
+                                                <h6 class="fw-bolder">{{$portofolio->proyek->name}}</h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-md mt-2 text-size-Portofolio-Transaksi-title text-muted">
+                                            Status
+                                            <div class="col pt-2">
+                                                <h6 class="fw-bold mb-0">{{$portofolio->status}}</h6>
+                                            </div>
+                                        </div>
 
+                                        <div class="col-md mt-2 text-size-Portofolio-Transaksi-title text-muted">Dana
+                                            Terkumpul
+                                            <div class="col pt-2 text-nowrap">
+                                                <h6 class="fw-bolder"><span>Rp</span> {{$portofolio->totalDonations()}}
+                                                </h6>
+                                            </div>
+                                        </div>
+                                        <div class="col-md mt-2 ">
+
+                                            <div class="d-grid">
+                                                <a href=""
+                                                    class="btn btn-sm btn-outline-success button-margin-portofolio">
+                                                    Lihat Detail
+                                                </a>
+
+
+                                            </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            @empty
+                            <!-- JIKA Portofolio AKtif TIDAK ADA DATANYA -->
+                            <div class="card container-fluid" style="height:200px;">
+                                <div class="row h-100">
+                                    <div class="col-sm-12 my-auto text-center">
+                                        <i class="fas fa-exchange-alt text-muted"></i>
+                                        <p class="text-muted">Belum Ada Transaksi</p>
+                                        <a class="btn btn-sm btn-default" href="{{route('donation')}}">+ Tambah
+                                            Investasi</a>
+                                    </div>
+                                </div>
+                            </div>
+                            @endforelse
                         </div>
                         
                         <div class="tab-pane fade" id="rejected" role="tabpanel" aria-labelledby="rejected-tab">
-                        @forelse ($user_crowdfunding_rejected as $portofolio)
-                            <div class="card border-left-success shadow h-100 mb-2 rounded">
+                        @forelse ($user_crowdfunding_rejected->sortByDesc('created_at')  as $portofolio)
+                            <div class="card border-left-failed shadow h-100 mb-2 rounded">
                                 <div class="card-body">
                                     <div class="row pb-3 ">
                                         <div class="col-md-4 mt-2 text-size-Portofolio-Transaksi-title text-muted">Nama
@@ -258,8 +313,8 @@ body {
                             @endforelse
                         </div>
                         <div class="tab-pane fade" id="review" role="tabpanel" aria-labelledby="review-tab">
-                        @forelse ($user_crowdfunding_review as $portofolio)
-                        <div class="card border-left-success shadow h-100 mb-2 rounded">
+                        @forelse ($user_crowdfunding_review->sortByDesc('created_at')  as $portofolio)
+                        <div class="card border-left-progress shadow h-100 mb-2 rounded">
                                 <div class="card-body">
                                     <div class="row pb-3 ">
                                         <div class="col-md-4 mt-2 text-size-Portofolio-Transaksi-title text-muted">Nama
@@ -278,7 +333,7 @@ body {
                                         <div class="col-md mt-2 text-size-Portofolio-Transaksi-title text-muted">Dana
                                             Anda
                                             <div class="col pt-2 text-nowrap">
-                                                <h6 class="fw-bolder"><span>Rp</span> {{$portofolio->target_nominal}}
+                                                <h6 class="fw-bolder"><span>Rp</span> Rp. {{ number_format($portofolio->target_nominal,0,",",".") }}
                                                 </h6>
                                             </div>
                                         </div>

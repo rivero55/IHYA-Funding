@@ -24,12 +24,12 @@ class proyek extends Model
 		'image',
 		'description'
     ];
-    protected $hidden= [];
+
     public function proyek_owner()
 	{
 		return $this->belongsTo(ProyekOwner::class, 'owner_id');
 	}
-	public function proyek_batches()
+	public function proyek_batch()
 	{
 		return $this->hasMany(ProyekBatch::class);
 	}
