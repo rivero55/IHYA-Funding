@@ -15,7 +15,7 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            $table->unsignedDouble('balance')->default(2000000)->after('role');
+            $table->string('profile_image')->nullable()->after('balance');
 
         });
     }
@@ -29,8 +29,8 @@ return new class extends Migration
     {
         Schema::table('users', function (Blueprint $table) {
             //
-            $table->dropColumn('balance');
-            
+            $table->dropColumn('profile_image');
+
         });
     }
 };
