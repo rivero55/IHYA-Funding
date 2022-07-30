@@ -33,8 +33,8 @@ Carbon::setLocale('id');
                     <div class="mt-auto">
                         
                             <div class="d-flex justify-content-between align-items-center mb-2" id="landing-projek-paragraph">
-                            <p class="float-left mb-0">Penggalang</p>
-                            <p class="float-right mb-0 card-text fw-bold">{{ $data->proyek->proyek_owner->name}}</p>
+                            <p class="text-start mb-0">Penggalang</p>
+                            <p class="text-end mb-0 card-text fw-bold">{{ $data->proyek->proyek_owner->name}}</p>
                         </div>
                         <p class=""><span class="fw-bold"> 
                                  Rp {{number_format($data->totalDonations(),0,",",".")}}</span>  Terdanai
@@ -46,8 +46,8 @@ Carbon::setLocale('id');
                         </div>
                         <a class="d-none" href="#"></a>
                         <div class="d-flex justify-content-between align-items-center" id="landing-projek-paragraph">
-                            <p class="float-left mb-0">Ditutup Pada</p>
-                            <p class="float-right mb-0">Tersisa</p>
+                            <p class="text-start mb-0">Ditutup Pada</p>
+                            <p class="text-end mb-0">Tersisa</p>
                         </div>
                         <div class="d-flex justify-content-between align-items-center" id="landing-projek-paragraph">
                             <p class="text-muted mb-1">

@@ -177,7 +177,7 @@ body {
                         </div>
                     </div>
                 <input type="hidden" name="user_id" value="{{Auth::user()->id}}">
-                <button type="submit" class="btn btn-success d-block my-2 w-100">Bayar</button>
+                <button type="submit" class="btn btn-success d-block my-2 w-100">Buat Proyek Pendanaan</button>
 
             </div>
         </div>
