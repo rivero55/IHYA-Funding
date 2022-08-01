@@ -22,7 +22,8 @@ class User extends Authenticatable
         'email',
         'password',
         'role',
-        'balance'
+        'balance',
+        'profile_image'
     ];
 
     /**
@@ -70,5 +71,9 @@ class User extends Authenticatable
 		}
 
 		return false;
+	}
+    public function getPhotoProfile()
+	{
+		return (empty($this->photo_profile) ? asset('img/default-profile.png'):asset('storage/images/profiles/'.$this->photo_profile));
 	}
 }

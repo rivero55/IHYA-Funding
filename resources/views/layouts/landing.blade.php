@@ -11,7 +11,6 @@
     <!--========== CSS ==========-->
     <link rel="stylesheet" href="{{asset('assets/css/styles.css')}}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
     <style>
     @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
@@ -64,6 +63,8 @@
                         <li class="nav__item dropdown nav__link">
                     <a class="nav__item dropdown-toggle nav__link" href="#" id="navbarDropdown" role="button"
                         data-bs-toggle="dropdown" aria-expanded="false">
+                        <img src="{{Auth::user()->getPhotoProfile()}}" height="25" width="25" alt="" loading="lazy"
+                            class="rounded-circle me-1" />
                         {{Auth::user()->name}}
                     </a>
                     <ul class="dropdown-menu" aria-labelledby="navbarDropdown">

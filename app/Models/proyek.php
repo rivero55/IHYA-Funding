@@ -21,6 +21,7 @@ class proyek extends Model
 		'name',
 		'type',
 		'location_code',
+		'location',
 		'image',
 		'description'
     ];

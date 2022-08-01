@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('name');
             $table->string('type')->nullable()->comment('Makanan/Bencana_Alam/Zakat/Panti_Asuhan/Kemanusiaan');
             $table->string('location_code')->nullable();
+            $table->string('location')->nullable();
             $table->string('image');
             $table->longText('description')->nullable();           
             $table->timestamps();

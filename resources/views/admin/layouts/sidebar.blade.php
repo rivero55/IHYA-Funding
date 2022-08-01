@@ -28,6 +28,11 @@ background: linear-gradient(180deg, rgba(9,193,58,1) 0%, rgba(5,119,51,1) 100%);
     </div>
 
     <li class="nav-item ">
+        <a class="nav-link" href="{{route('proyek-type.index')}}">
+            <i class="fas fa-people-carry"></i>
+            <span>Proyek Type</span></a>
+    </li>
+    <li class="nav-item ">
         <a class="nav-link" href="{{route('proyek-owner.index')}}">
             <i class="fas fa-people-carry"></i>
             <span>Proyek Owner</span></a>
