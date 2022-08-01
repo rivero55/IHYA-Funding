@@ -3,10 +3,10 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{route('admin')}}">Home</a></li>
-        <li class="breadcrumb-item active" aria-current="page">Project Owner</li>
+        <li class="breadcrumb-item active" aria-current="page">Proyek Owner</li>
     </ol>
 </nav>
-<h1 class="h3 mb-0 text-gray-800">Project Owner</h1>
+<h1 class="h3 mb-0 text-gray-800">Proyek Owner</h1>
 {{-- <p class="mb-4">Description</p> --}}
 
 @endsection
@@ -31,17 +31,17 @@
                         </thead>
                         <tbody>
 
-                            @foreach ($proyek_owners as $project_owner)
+                            @foreach ($proyek_owners as $proyek_owner)
                             <tr>
-                                <td>{{ $project_owner->name }}</td>
-                                <td>{!! $project_owner->description !!}</td>
+                                <td>{{ $proyek_owner->name }}</td>
+                                <td>{!! $proyek_owner->description !!}</td>
                                 <td class="text-center">
-                                    <form action="{{ route('proyek-owner.destroy', $project_owner->id) }}"
+                                    <form action="{{ route('proyek-owner.destroy', $proyek_owner->id) }}"
                                         method="POST" onsubmit="return confirm('Apakah anda yakin menghapus data ini?')">
                                         @csrf
                                         @method('delete')
                                         <a class="btn btn-sm btn-info"
-                                            href="{{ route('proyek-owner.edit', $project_owner->id) }}"><i class="far fa-edit"></i> Edit</a>
+                                            href="{{ route('proyek-owner.edit', $proyek_owner->id) }}"><i class="far fa-edit"></i> Edit</a>
                                         <button type="submit" class="btn btn-sm btn-outline-danger"><i class="far fa-trash-alt"></i> Hapus</button>
                                     </form>
                                 </td>

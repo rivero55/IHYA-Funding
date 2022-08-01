@@ -7,6 +7,7 @@ use Illuminate\Support\Carbon;
 use Illuminate\Http\Request;
 use App\Helpers\ApiFormatter;
 use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Support\Facades\Auth;
 
 class ProyekOwnerController extends Controller
 {
@@ -25,10 +26,10 @@ class ProyekOwnerController extends Controller
             'name' => 'required|string',
             'description' => 'nullable|string',
         ]);
-
+        $id_admin=Auth::user()->id;
         $store = ProyekOwner::insert([
             'name' => $request->name,
-            'user_id' => $request->null,
+            'user_id' => $id_admin,
             'description' => $request->description,
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
