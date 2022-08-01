@@ -13,4 +13,5 @@ class ProyekType extends Model
         'name',
         'image'
     ];
+    public $timestamps = false;
 }
