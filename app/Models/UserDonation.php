@@ -30,7 +30,7 @@ class UserDonation extends Model
 
 	public function proyek_batch()
 	{
-		return $this->belongsTo(ProyekBatch::class)->withTrashed();
+		return $this->belongsTo(ProyekBatch::class);
 	}
 
 	public function proyek()

@@ -19,7 +19,7 @@ class DonasiController extends Controller
     public function index()
     {
             $types = ProyekType::all();
-            $proyek_batch = ProyekBatch::where('status','!=','draft')->limit(5)->get();
+            $proyek_batch = ProyekBatch::where('status','!=','draft')->limit(12)->get();
             return view('donation.donation')->with(compact('types','proyek_batch'));
         
     }

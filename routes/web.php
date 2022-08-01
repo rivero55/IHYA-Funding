@@ -13,6 +13,7 @@ use App\Http\Controllers\LandingController;
 use App\Http\Controllers\ProyekTypeController;
 use App\Http\Controllers\TransactionController;
 use App\Http\Controllers\UserCrowdfundingVerification;
+use App\Http\Controllers\UserDonationController;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -59,6 +60,8 @@ Route::middleware(['auth', 'checkRole:user,admin'])->group(function(){
 Route::post('/pay/donation/{proyek_id}/{proyek_batch_id}', [TransactionController::class, 'payDonation'])->name('pay.donation');
 Route::resource('funding', CrowdFundingController::class);
 Route::resource('funding.batch', CrowdFundingBatchController::class);
+Route::resource('donasiku', UserDonationController::class);
+
 });
 
 Auth::routes();

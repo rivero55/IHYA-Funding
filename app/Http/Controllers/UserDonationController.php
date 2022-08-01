@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Transaction;
 use App\Models\UserDonation;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class UserDonationController extends Controller
 {
@@ -14,7 +16,9 @@ class UserDonationController extends Controller
      */
     public function index()
     {
-        
+        $user_id = Auth::user()->id;
+        $user_donations= Transaction::where('user_id', $user_id)->get();
+        return view('transaction.user-donation')->with(compact('user_donations'));
     }
 
     /**

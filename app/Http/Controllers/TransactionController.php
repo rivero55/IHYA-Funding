@@ -64,7 +64,7 @@ class TransactionController extends Controller
         ]);
         if ($request->payment_method == 'wallet') {
             $storeTransaction->user->minusBalance($nominal);
-            $this->handlingInvestnak($storeTransaction);
+            $this->handlingDonation($storeTransaction);
             Toastr::success('Pembayaran berhasil dilakukan', 'Berhasil!');
             return redirect()->back();
         } else {
@@ -75,7 +75,7 @@ class TransactionController extends Controller
             return redirect(Transaction::PAYMENT_URL() .$storeTransaction->payment_token);
         }
     }
-    public function handlingInvestnak($transaction)
+    public function handlingDonation($transaction)
     {
         //jika request sudah settlement / capture
         $transaction->update([
@@ -108,6 +108,8 @@ class TransactionController extends Controller
             // }
         }
     }
+
+    
 
 }
 
