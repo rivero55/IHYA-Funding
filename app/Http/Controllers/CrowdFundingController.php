@@ -24,8 +24,9 @@ class CrowdFundingController extends Controller
     {
      
         $user = Auth::user();
-        $proyek_owner = ProyekOwner::where('user_id', $user->id)->first();
-        $proyek = proyek::where('owner_id', $proyek_owner->id ?? 0)->get('id');
+        $proyek_owner = ProyekOwner::where('user_id', $user->id)->get('id');
+        $proyek = proyek::whereIn('owner_id', $proyek_owner)->get('id');
+        // dd($proyek);
         $user_crowdfunding = ProyekBatch::whereIn('proyek_id', $proyek ?? 0)->get();
         $user_crowdfunding_active = ProyekBatch::whereIn('proyek_id', $proyek ?? 0)->where('status', 'funding' )->get();
         $user_crowdfunding_rejected= ProyekBatch::whereIn('proyek_id', $proyek ?? 0)->where('verification_status', 'rejected' )->get();
@@ -139,6 +140,7 @@ class CrowdFundingController extends Controller
             'created_at' => Carbon::now(),
             'updated_at' => Carbon::now(),
         ]);
+        // dd($store_proyek);
         if (!$store_proyek) {
             Toastr::error('Gagal ', 'gagal!');
             return redirect()->back()->withInput();
