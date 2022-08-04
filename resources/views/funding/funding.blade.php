@@ -110,7 +110,7 @@ body {
                                         <div class="col-md mt-2 ">
 
                                             <div class="d-grid">
-                                                <a href=""
+                                                <a href="{{route('funding.batch.show', [$funding->proyek->id, $funding->id])}}"
                                                     class="btn btn-sm btn-outline-success button-margin-portofolio mb-1">
                                                     Lihat Detail
                                                 </a>
@@ -170,7 +170,7 @@ body {
                                         <div class="col-md mt-2 ">
 
                                             <div class="d-grid">
-                                                <a href=""
+                                                <a href="{{route('funding.batch.show', [$funding->proyek->id, $funding->id])}}"
                                                     class="btn btn-sm btn-outline-success button-margin-portofolio">
                                                     Lihat Detail
                                                 </a>
@@ -226,7 +226,7 @@ body {
                                         <div class="col-md mt-2 ">
 
                                             <div class="d-grid">
-                                                <a href=""
+                                                <a href="{{route('funding.batch.show', [$funding->proyek->id, $funding->id])}}"
                                                     class="btn btn-sm btn-outline-success button-margin-portofolio">
                                                     Lihat Detail
                                                 </a>
@@ -282,14 +282,11 @@ body {
                                         <div class="col-md mt-2 ">
 
                                             <div class="d-grid">
-                                                <a href=""
+                                                <a href="{{route('funding.batch.show', [$funding->proyek->id, $funding->id])}}"
                                                     class="btn btn-sm btn-outline-success button-margin-portofolio">
                                                     Lihat Detail
                                                 </a>
-                                                <a href="{{ route('funding.batch.create', $funding->proyek->id) }}"
-                                                    class="btn btn-sm btn-outline-success button-margin-portofolio">
-                                                    Tambah Batch
-                                                </a>
+                                              
 
                                             </div>
 
@@ -333,14 +330,14 @@ body {
                                         <div class="col-md mt-2 text-size-Portofolio-Transaksi-title text-muted">Dana
                                             Anda
                                             <div class="col pt-2 text-nowrap">
-                                                <h6 class="fw-bolder"><span>Rp</span> Rp. {{ number_format($funding->target_nominal,0,",",".") }}
+                                                <h6 class="fw-bolder"><span>Rp </span> {{ number_format($funding->target_nominal,0,",",".") }}
                                                 </h6>
                                             </div>
                                         </div>
                                         <div class="col-md mt-2 ">
 
                                             <div class="d-grid">
-                                                <a href=""
+                                                <a href="{{route('funding.batch.show', [$funding->proyek->id, $funding->id])}}"
                                                     class="btn btn-sm btn-outline-success button-margin-portofolio">
                                                     Lihat Detail
                                                 </a>

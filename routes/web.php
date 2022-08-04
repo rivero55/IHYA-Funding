@@ -56,11 +56,12 @@ Route::middleware(['auth', 'checkRole:admin'])->prefix('admin')->group(function(
     Route::get('/user_verification/{user_id}', [UserCrowdfundingVerification::class, 'userVerificationModalBody'])->name('user.verification.modal-body');
     Route::patch('proyek/{proyek_id}/batch/{batch_id}/status/update', [ProyekBatchController::class, 'updateStatus'])->name('proyek.batch.status.update');
 });
+
 Route::middleware(['auth', 'checkRole:user,admin'])->group(function(){ 
-Route::post('/pay/donation/{proyek_id}/{proyek_batch_id}', [TransactionController::class, 'payDonation'])->name('pay.donation');
-Route::resource('funding', CrowdFundingController::class);
-Route::resource('funding.batch', CrowdFundingBatchController::class);
-Route::resource('donasiku', UserDonationController::class);
+    Route::post('/pay/donation/{proyek_id}/{proyek_batch_id}', [TransactionController::class, 'payDonation'])->name('pay.donation');
+    Route::resource('funding', CrowdFundingController::class);
+    Route::resource('funding.batch', CrowdFundingBatchController::class);
+    Route::resource('donasiku', UserDonationController::class);
 
 });
 

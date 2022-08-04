@@ -48,7 +48,6 @@ class ProyekBatch extends Model
 	{
 		return $this->hasMany(UserDonation::class);
 	}
-
 	public function totalDonations()
 	{
 		return $this->user_donations()->sum('nominal');
@@ -56,6 +55,10 @@ class ProyekBatch extends Model
 	public function countDonations()
 	{
 		return $this->user_donations()->count();
+	}
+	public function transactions()
+	{
+		return $this->hasMany(Transaction::class);
 	}
 
 	public function count()
@@ -79,5 +82,16 @@ class ProyekBatch extends Model
 	{
 		$isFullyFunded = ($this->end_date->endofday()->isPast()) || ($this->status != 'funding');
 		return $isFullyFunded;
+	}
+
+	public function isFunding()
+	{
+		$isFunding = ($this->status == 'funding' && $this->verification_status == 'accepted');
+		return $isFunding;
+	}
+	public function redeemDana()
+	{
+		$redeemDana = ($this->status != 'draft' && $this->verification_status == 'accepted');
+		return $redeemDana;
 	}
 }
