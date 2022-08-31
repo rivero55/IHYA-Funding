@@ -3,11 +3,11 @@
 <nav aria-label="breadcrumb">
     <ol class="breadcrumb">
         <li class="breadcrumb-item"><a href="{{ route('admin') }}">Home</a></li>
-        <li class="breadcrumb-item"><a href="{{ route('proyek-owner.index') }}">Project Owner</a></li>
+        <li class="breadcrumb-item"><a href="{{ route('proyek-owner.index') }}">Proyek Owner</a></li>
         <li class="breadcrumb-item active" aria-current="page">Edit Data</li>
     </ol>
 </nav>
-<h1 class="h3 mb-0 text-gray-800">Project Owner</h1>
+<h1 class="h3 mb-0 text-gray-800">Proyek Owner</h1>
 {{-- <p class="mb-4">Description</p> --}}
 
 @endsection
@@ -40,7 +40,7 @@
                     </div>
                     <div class="row mt-3">
                         <div class="form-group col-md-12">
-                            <label for="description">Deskripsi (Profil Peternak)</label>
+                            <label for="description">Deskripsi (Profil Lembaga)</label>
                             <textarea class="form-control" id="description" name="description" rows="3">{{ old('description') ?? $project_owner->description }}</textarea>
                         </div>
                     </div>

@@ -101,7 +101,7 @@ body {
                     <input type="text" class="form-control" name="location" id="inputPassword4" value="{{old('location')}}">
                 </div>
                 <div class="mb-3 col-md-12 mb-2">
-                    <label for="exampleFormControlTextarea1" class="form-label">Tujuan Proyek / Deskripsi Penggalang
+                    <label for="exampleFormControlTextarea1" class="form-label">Deskripsi Penggalang
                         Dana</label>
                     <textarea class="form-control" id="exampleFormControlTextarea1" name="tujuan_penggalang" rows="3"
                         placeholder="Kami merupakan lembaga amil zakat yang bergerak dalam penghimpunan dana Zakat, infaq, sedekah, kemanusiaan, dan CSR perusahaan" >{{old('tujuan_penggalang') ??$proyek_owners->description ?? ''}}</textarea>

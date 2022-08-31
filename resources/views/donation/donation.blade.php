@@ -24,7 +24,7 @@ Carbon::setLocale('id');
     <h3 class="mb-5">Event Berbagi</h3>
     <div class="row">
         @foreach ($proyek_batch as $data)
-        <div class="col-md-6 col-lg-3 col-12">
+        <div class="col-md-6 col-lg-3 col-12 mt-2">
             <div class="card rounded-top h-100">
                 <img class="card-img-top" src="{{ asset('storage/images/proyek/'.$data->proyek->image) }}"
                     alt="Card image cap">

@@ -27,8 +27,8 @@ body {
     @csrf
     <div class="row mt-2">
         <div class="col-6 offset-3 card">
-            <img class="card-img-top my-2"
-                src="{{ asset('storage/images/proyek/'.$funding_detail->proyek->image) }}" alt="Card image cap">
+            <img class="card-img-top my-2" src="{{ asset('storage/images/proyek/'.$funding_detail->proyek->image) }}"
+                alt="Card image cap">
 
             <h3 class="text-black pb-2">{{$funding_detail->proyek->name}} - Batch {{$funding_detail->batch_no}}</h3>
             <div class="d-flex justify-content-between align-items-center ">
@@ -49,10 +49,10 @@ body {
                 </div>
             </div>
             <div class="row align-items-center ">
-                    <p class="text-pendanaan mt-2"><span class="text-harga">Total Donasi terkumpul Rp
-                            {{number_format($funding_detail->totalDonations(),0,",",".")}}</span>
-                        / <span class="fw-bold"> Rp
-                            {{number_format($funding_detail->target_nominal,0,",",".")}}</span></p>
+                <p class="text-pendanaan mt-2"><span class="text-harga">Total Donasi terkumpul Rp
+                        {{number_format($funding_detail->totalDonations(),0,",",".")}}</span>
+                    / <span class="fw-bold"> Rp
+                        {{number_format($funding_detail->target_nominal,0,",",".")}}</span></p>
                 <div class="d-flex justify-content-between align-items-center pt-4">
 
                     <p class="fw-bold">Tanggal Proyek Donasi Mulai - Berakhir</p>
@@ -60,18 +60,60 @@ body {
                         )</p>
                 </div>
 
-                    <p class=" pt-3">Status Proyek : <span class="fw-bold badge rounded-pill bg-{{($funding_detail->status == 'draft') ? 'secondary' : (($funding_detail->status == 'closed') ? 'warning' : 'success')}}">{{$funding_detail->status}}</span></p>
-                    <p class="f">Status Verifikasi Proyek : <span class="fw-bold badge rounded-pill bg-{{($funding_detail->verification_status == 'rejected') ? 'danger' : (($funding_detail->verification_status == 'process') ? 'warning' : 'success')}}">{{$funding_detail->verification_status}}</span></p>
-                    @if($funding_detail->verification_status == 'rejected')
-                    <p>Feedback: <span class="fw-bold">{{$funding_detail->verification_feedback}}</span></p>
-                    @endif
+                <p class=" pt-3">Status Proyek : <span
+                        class="fw-bold badge rounded-pill bg-{{($funding_detail->status == 'draft') ? 'secondary' : (($funding_detail->status == 'closed') ? 'warning' : 'success')}}">{{$funding_detail->status}}</span>
+                </p>
+                <p class="f">Status Verifikasi Proyek : <span
+                        class="fw-bold badge rounded-pill bg-{{($funding_detail->verification_status == 'rejected') ? 'danger' : (($funding_detail->verification_status == 'process') ? 'warning' : 'success')}}">{{$funding_detail->verification_status}}</span>
+                </p>
+                @if($funding_detail->verification_status == 'rejected')
+                <p>Feedback: <span class="fw-bold">{{$funding_detail->verification_feedback}}</span></p>
+                @endif
             </div>
             @if(!$funding_detail->isFunding())
-            <a href="{{route('funding.batch.edit', [$funding_detail->proyek->id, $funding_detail->id])}} " type=button class="btn btn-outline-success my-2">Edit Proyek Batch</a>
+            <a href="{{route('funding.batch.edit', [$funding_detail->proyek->id, $funding_detail->id])}} " type=button
+                class="btn btn-outline-success my-2">Edit Proyek Batch</a>
             @endif
 
             @if($funding_detail->redeemDana())
-            <a href="{{route('funding.batch.show', [$funding_detail->proyek->id, $funding_detail->id])}} " type=button class="btn btn-success my-2">Tarik Dana</a>
+
+            <button type="button" class="btn btn-success my-2" data-bs-toggle="modal" data-bs-target="#tarikdana">
+                Tarik Dana
+            </button>
+            <div class="modal fade" id="tarikdana" tabindex="-1" aria-labelledby="tarikdanaLabel" aria-hidden="true">
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Tarik dana proyek</h5>
+                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                        </div>
+                        <div class="modal-body">
+                            <form action="{{ route('pay.donation-payout', $funding_detail->id) }}" method="POST"
+                                enctype="multipart/form-data">
+                                @csrf
+                                <p class="mb-2">Dana Terakhir : <span class="fw-bold">Rp {{number_format($funding_detail->currBalance(),0,",",".")}}</span></p>
+                                <label for="description">Jumlah dana yang ingin ditarik</label>
+                                <div class="input-group">
+                                    <span class="input-group-text">Rp</span>
+                                    <input type="number" class="form-control" name="nominal" id="nominal" min=1
+                                        value="{{ old('target_nominal') }}">
+                                </div>
+                                <small class="">Tidak boleh melebihi nominal Dana Terakhir</small>
+
+                                <div class="form-group col-md-12 mt-2">
+                                    <label for="description">Deskripsi</label>
+                                    <textarea class="form-control" id="description" name="description"
+                                        rows="3"></textarea>
+                                </div>
+                                
+                        </div>
+                        <div class="modal-footer">
+                        <button type="submit" class="btn btn-success">Tarik Dana</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
             @endif
         </div>
     </div>
@@ -79,3 +121,18 @@ body {
 </div>
 
 @endsection
+@push('css')
+<link href="{{asset('vendor/summernote/summernote-bs4.min.css')}}" rel="stylesheet">
+@endpush
+@push('js')
+<script src="{{asset('vendor/summernote/summernote-bs4.min.js')}}"></script>
+<script>
+$(document).ready(function() {
+    $('#description').summernote({
+        placeholder: 'Ketik disini..',
+        height: 200
+    });
+});
+</script>
+
+@endpush

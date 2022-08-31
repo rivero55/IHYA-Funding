@@ -57,12 +57,12 @@ body {
                                 </div>
                             </div>
                             <div class="flex-grow-3 ms-3">
-                                <div class="badge rounded-pill bg-success">
-                                    <p class="mb-0">Payment {{$donasi_user->status}}</p>
+                                <div class="badge rounded-pill bg-{{($donasi_user->status == 'EXPIRED') ? 'danger' : (($donasi_user->status == 'PENDING') ? 'secondary' : 'success')}} ">
+                                    <p class="mb-0">{{(($donasi_user->status == 'COMPLETED') ? 'Payout' : 'Payment')}} {{$donasi_user->status}}</p>
                                 </div>
                             </div>
                         </div>
-                        <a href="{{route('donation.show', $donasi_user->proyek_batch->id)}}" class="stretched-link"></a>
+                        <a href="{{$donasi_user->payment_url}}" class="stretched-link"></a>
 
                     </div>
                     <hr>

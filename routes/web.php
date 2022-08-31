@@ -6,6 +6,7 @@ use App\Http\Controllers\ProyekOwnerController;
 use App\Http\Controllers\ProyekBatchController;
 use App\Http\Controllers\ProyekController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\callbackController;
 use App\Http\Controllers\CrowdFundingBatchController;
 use App\Http\Controllers\CrowdFundingController;
 use App\Http\Controllers\DonasiController;
@@ -38,8 +39,11 @@ Route::prefix('donasi')->group(function(){
     Route::get('/donasi-amount/{id}/{batch_id}', [DonasiController::class, 'donasiAmount'])->name('donation.amount');
     Route::get('/{batch_id}/donatur', [DonasiController::class, 'donasiDonatur'])->name('donation.donatur');
     Route::get('/{batch_id}/doa-orang-baik', [DonasiController::class, 'donasiDoa'])->name('donation.doa');
+    Route::get('/{batch_id}/kabar-terbaru', [DonasiController::class, 'kabarTerbaru'])->name('donation.kabar-terbaru');
 });
 
+Route::post('/x/callback-payout', [callbackController::class, 'callbackpayout']);
+Route::post('/x/callback-invoice', [callbackController::class, 'callback']);
 Route::post('region',[AddressController::class, 'get_data'])->name('region');
 Route::get('region-check',[AddressController::class, 'index'])->name('region-check');
 Route::get('/penggalang/{owner_id}', [DonasiController::class, 'penggalang'])->name('donation.penggalang');
@@ -59,6 +63,7 @@ Route::middleware(['auth', 'checkRole:admin'])->prefix('admin')->group(function(
 
 Route::middleware(['auth', 'checkRole:user,admin'])->group(function(){ 
     Route::post('/pay/donation/{proyek_id}/{proyek_batch_id}', [TransactionController::class, 'payDonation'])->name('pay.donation');
+    Route::post('/payout/{proyek_batch_id}', [TransactionController::class, 'payoutXendit'])->name('pay.donation-payout');
     Route::resource('funding', CrowdFundingController::class);
     Route::resource('funding.batch', CrowdFundingBatchController::class);
     Route::resource('donasiku', UserDonationController::class);

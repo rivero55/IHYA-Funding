@@ -94,7 +94,7 @@ body {
                                             </div>
                                         </div>
                                         <div class="col-md mt-2 text-size-Portofolio-Transaksi-title text-muted">
-                                            Progress
+                                            Status Verifikasi
                                             <div class="col pt-2">
                                                 <h6 class="fw-bold mb-0">{{$funding->verification_status}}</h6>
                                             </div>

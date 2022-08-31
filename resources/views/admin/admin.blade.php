@@ -15,7 +15,7 @@
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
                             Total proyek Aktif</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$proyek_aktif}}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-money-bill-wave fa-2x text-gray-300"></i>
@@ -33,7 +33,7 @@
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                             Total User Donasi</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">24</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$donasi}}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-box fa-2x text-gray-300"></i>
@@ -50,8 +50,8 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                            Konfirmasi Untuk Lembaga</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800">12</div>
+                            Total Penggalang Dana</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$owner}}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-truck fa-2x text-gray-300"></i>
@@ -68,8 +68,8 @@
                 <div class="row no-gutters align-items-center">
                     <div class="col mr-2">
                         <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                            Verifikasi User Tertunda</div>
-                        <div class="h5 mb-0 font-weight-bold text-gray-800"></div>
+                            Menunggu Verifikasi Proyek</div>
+                        <div class="h5 mb-0 font-weight-bold text-gray-800">{{$verifikasi}}</div>
                     </div>
                     <div class="col-auto">
                         <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -89,12 +89,12 @@
         <div class="card shadow mb-4">
             <!-- Card Header - Dropdown -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Jumlah terdonasi</h6>
             </div>
             <!-- Card Body -->
             <div class="card-body">
                 <div class="chart-area">
-                    <canvas id="myAreaChart"></canvas>
+                    <!-- <canvas id="myAreaChart"></canvas> -->
                 </div>
             </div>
         </div>
@@ -104,13 +104,13 @@
         <div class="card shadow mb-4">
             <!-- Card Header - Dropdown -->
             <div class="card-header py-3 d-flex flex-row align-items-center justify-content-between">
-                <h6 class="m-0 font-weight-bold text-primary">Earnings Overview</h6>
+                <h6 class="m-0 font-weight-bold text-primary">Persentase penggalang dan donatur</h6>
              
             </div>
             <!-- Card Body -->
             <div class="card-body">
                 <div class="chart-area">
-                    <canvas id="myAreaChart"></canvas>
+                    <!-- <canvas id="myAreaChart"></canvas> -->
                 </div>
             </div>
         </div>
@@ -118,6 +118,8 @@
 
   
 </div>
+<!-- <div class="card col-12 text-center"><h1>Berbagi Bersama</h1>
+<img src="{{asset('assets/img/logo.png')}}" style="width:200px;"></div> -->
 
 
 @endsection

@@ -13,5 +13,6 @@ class VerifyCsrfToken extends Middleware
      */
     protected $except = [
         //
+        'x/callback-invoice','/x/callback-payout'
     ];
 }

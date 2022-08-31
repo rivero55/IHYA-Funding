@@ -47,14 +47,14 @@ Carbon::setLocale('id');
 
                     </div>
 
-                    <div class="services__content py-5 ">
+                    <!-- <div class="services__content py-5 ">
                     <img src="{{asset('assets/img/landing/donate.svg')}}" style="width:120px;" alt="" class="home__img filter-green">
                         
                         <h3 class="services__title mt-2">Zakat</h3>
                         <p class="services__description">Sempurnakan Hukum Islam-mu </p>
                         <a href="{{route('donation')}}" style="color:#198754 !important" >Bayar Zakat</a>
 
-                    </div>
+                    </div> -->
 
                     <div class="services__content py-5 ">
                     <img src="{{asset('assets/img/landing/moneybag.png')}}" style="width:120px;"alt="" class="home__img filter-green">

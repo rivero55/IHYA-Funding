@@ -85,7 +85,7 @@ body {
                                             <label class="btn btn-outline-success w-100 py-2 card-input"
                                                 for="first-payment" id="wallet-card-methodpayment">
                                                 <img src="{{asset('assets/img/logo.png')}}" style="width:40px"
-                                                    class="center"></img> Bca
+                                                    class="center"></img> Transfer Bank
                                             </label>
                                         </label>
 
@@ -97,7 +97,7 @@ body {
                                                 autocomplete="off">
                                             <label
                                                 class="btn btn-outline-success w-100 card-input"
-                                                for="second-payment-tranferbank" id="wallet-card-methodpayment">Transfer
+                                                for="second-payment-tranferbank" id="wallet-card-methodpayment">E - Wallet
                                             </label>
                                         </label>
                                     </div>
@@ -106,32 +106,32 @@ body {
                         </div>
                     </div>
                     @if(!Auth::guest())
-                    <div class="accordion-item">
-                        <h2 class="accordion-header" id="headingThree">
-                            <button class="accordion-button" type="button" data-bs-toggle="collapse"
-                                data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">
-                                Wallet
-                            </button>
-                        </h2>
-                        <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree"
-                            data-bs-parent="#accordionExample">
-                            <div class="accordion-body">
+                    <!--<div class="accordion-item">-->
+                    <!--    <h2 class="accordion-header" id="headingThree">-->
+                    <!--        <button class="accordion-button" type="button" data-bs-toggle="collapse"-->
+                    <!--            data-bs-target="#collapseThree" aria-expanded="true" aria-controls="collapseThree">-->
+                    <!--            Wallet-->
+                    <!--        </button>-->
+                    <!--    </h2>-->
+                    <!--    <div id="collapseThree" class="accordion-collapse collapse show" aria-labelledby="headingThree"-->
+                    <!--        data-bs-parent="#accordionExample">-->
+                    <!--        <div class="accordion-body">-->
                              
-                            <input type="radio" class="btn-check" name="payment_method"
-                                                value="wallet" id="wallet"
-                                                autocomplete="off">
-                                            <label
-                                                class="btn btn-outline-success card py-2 card-input text-radio text-center"
-                                                for="wallet" id="wallet-card-methodpayment"> <p class="mb-0">Wallet</p>
-                                    <span class="">Saldo Anda : Rp
-                                        {{number_format(Auth::user()->balance,0,",",".")}}</span>
-                                            </label>
-                                </div>
+                    <!--        <input type="radio" class="btn-check" name="payment_method"-->
+                    <!--                            value="wallet" id="wallet"-->
+                    <!--                            autocomplete="off">-->
+                    <!--                        <label-->
+                    <!--                            class="btn btn-outline-success card py-2 card-input text-radio text-center"-->
+                    <!--                            for="wallet" id="wallet-card-methodpayment"> <p class="mb-0">Wallet</p>-->
+                    <!--                <span class="">Saldo Anda : Rp-->
+                    <!--                    {{number_format(Auth::user()->balance,0,",",".")}}</span>-->
+                    <!--                        </label>-->
+                    <!--            </div>-->
                                
-                        </div>
-                    </div>
+                    <!--    </div>-->
+                    <!--</div>-->
                     
-                    <div class="accordion-item">
+                    <!-- <div class="accordion-item">
                         <h2 class="accordion-header" id="headingTwo">
                             <button class="accordion-button collapsed" type="button" data-bs-toggle="collapse"
                                 data-bs-target="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
@@ -144,7 +144,7 @@ body {
 
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                 
                 </div>
             </div>

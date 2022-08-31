@@ -60,13 +60,18 @@ class ProyekBatch extends Model
 	{
 		return $this->hasMany(Transaction::class);
 	}
-
+	public function outcomeTransaction()
+	{
+		return $this->transactions()->where('transaction_type', 'outcome')->where('status', 'completed')->sum('nominal');
+	}
+	public function currBalance()
+	{
+		return $this->totalDonations()-($this->outcomeTransaction());
+	}
 	public function count()
-{
+	{
     return ($this->verification_status == "accepted");
-}
-
-
+	}
 	public function totalPercentage()
 	{
 		return round(($this->totalDonations()/$this->target_nominal*100));

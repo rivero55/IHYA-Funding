@@ -2,6 +2,7 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
@@ -26,6 +27,9 @@ class Transaction extends Model
 		'payment_method',
 		'status',
 		'description',
+		'payment_token',
+		'payment_url',
+		'external_id',
 		'created_by',
 		'updated_by'
 	];
@@ -46,5 +50,9 @@ class Transaction extends Model
 	public function user_donation()
 	{
 		return $this->belongsTo(UserDonation::class);
+	}
+	public function waktuTarikDana(){
+		$time = Carbon::parse(Carbon::now())->diffForHumans($this->created_at,true) . ' yang lalu';
+		return $time;
 	}
 }

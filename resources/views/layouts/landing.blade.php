@@ -54,9 +54,9 @@
                         <li class="nav__item"><a href="{{route('landing')}}"
                                 class="nav__link {{ Route::is('landing') ? 'active-link' : '' }}">Home</a></li>
                         <li class="nav__item "><a href="{{route('donation')}}" class="nav__link {{ Route::is('donation') ? 'active-link' : '' }}">Donasi</a></li>
-                        <li class="nav__item"><a href="" class="nav__link ">Donatur</a></li>
-                        <li class="nav__item"><a href="#about" class="nav__link">About</a></li>
-                        <li class="nav__item"><a href="#services" class="nav__link">Services</a></li>
+                        <li class="nav__item"><a href="{{route('funding.index')}}" class="nav__link {{ Route::is('funding.index') ? 'active-link' : '' }} ">Galang Dana</a></li>
+                        <!-- <li class="nav__item"><a href="#about" class="nav__link">Zakat</a></li> -->
+                        <li class="nav__item"><a href="{{route('donasiku.index')}}" class="nav__link {{ Route::is('donasiku.index') ? 'active-link' : '' }} ">Donasiku</a></li>
                         @guest
                         <li class="nav__item"><a href="{{route('login')}}" class="nav__link">Login</a></li>
                         @else

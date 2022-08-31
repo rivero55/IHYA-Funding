@@ -6,6 +6,7 @@ use App\Models\proyek;
 use App\Models\ProyekBatch;
 use App\Models\ProyekOwner;
 use App\Models\ProyekType;
+use App\Models\Transaction;
 use App\Models\UserDonation;
 use Illuminate\Http\Request;
 
@@ -19,7 +20,7 @@ class DonasiController extends Controller
     public function index()
     {
             $types = ProyekType::all();
-            $proyek_batch = ProyekBatch::where('status','!=','draft')->limit(12)->get();
+            $proyek_batch = ProyekBatch::where('status','!=','draft')->limit(18)->get();
             return view('donation.donation')->with(compact('types','proyek_batch'));
         
     }
@@ -63,8 +64,9 @@ class DonasiController extends Controller
         $user_donations = UserDonation::where('proyek_batch_id', $id)->get();
         $donatur = $user_donations->count();
         $user_donations_message = UserDonation::where('proyek_batch_id', $id)->where('message' ,'!=', null)->get();
-        // dd($user_donations);
-        return view('donation.show', compact('proyek_batch', 'user_donations','user_donations_message','donatur'));
+        $log_transaksi = Transaction::where('proyek_batch_id', $id)->where('status','COMPLETED')->get();
+        // dd($log_transaksi);
+        return view('donation.show', compact('proyek_batch', 'user_donations','user_donations_message','donatur','log_transaksi'));
     }
     public function donasiDonatur($proyek_batch_id)
     {
@@ -84,6 +86,13 @@ class DonasiController extends Controller
         $proyek = proyek::where('owner_id', $proyek_owner->id ?? 0)->get('id');
         $penggalang_crowdfunding = ProyekBatch::whereIn('proyek_id', $proyek ?? 0)->get();
         return view('donation.penggalang')->with(compact('proyek_owner','penggalang_crowdfunding'));
+        
+    }
+    public function kabarTerbaru($proyek_batch_id)
+    {
+        $log_transaksi = Transaction::where('proyek_batch_id', $proyek_batch_id)->where('status','COMPLETED')->get();
+        return view('donation.kabar-terbaru')->with(compact('log_transaksi'));
+
         
     }
     /**

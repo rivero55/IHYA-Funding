@@ -41,7 +41,7 @@ body {
                     <select class="form-select mt-2" id="proyek_type" name="proyek_type">
                         <option value="0" selected disabled>Pilih Kategori Proyek</option>
                         @foreach ($proyek_types as $proyek_type)
-                        <option value="{{ $proyek_type->name}}"}} selected>{{ $proyek_type->name }}</option>
+                        <option value="{{ $proyek_type->name}}"{{$funding_batch->proyek->type == $proyek_type->name ? 'selected':''}}>{{ $proyek_type->name }}</option>
                         @endforeach
                     </select>
                 </div>

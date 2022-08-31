@@ -149,8 +149,8 @@ body {
         @endif
 
 
-
-        <div class="col-lg-4 offset-lg-1 col-md-12" style="word-wrap: break-word;">
+    <div class="col-lg-6 offset-lg-1 col-md-12">
+        <div class="mt-2" style="word-wrap: break-word;">
             <div class="card">
                 <div class="card-body">
                     <h4 class="my-2">Doa dan Harapan Donatur</h4>
@@ -185,7 +185,7 @@ body {
         </div>
 
 
-        <div class="col-lg-4 offset-lg-1 col-md-12" style="word-wrap: break-word;">
+        <div class="mt-2" style="word-wrap: break-word;">
             <div class="card">
                 <div class="card-body">
                     <h4 class="my-2">Donasi ({{$donatur}})</h4>
@@ -221,7 +221,43 @@ body {
                 </div>
             </div>
         </div>
+
+        <div class="mt-2" style="word-wrap: break-word;">
+            <div class="card">
+                <div class="card-body">
+                    <h4 class="my-2">Kabar Terkini </h4>
+                    @foreach($log_transaksi->sortByDesc('created_at')->take(5) as $log_aktifitas)
+                    <div class="card border col-lg-12 mb-2" style="border-radius: 15px;">
+                        <div class="card-body pe-4 py-2 text-black">
+                            <div class="d-flex align-items-center">
+                                <div class="flex-shrink-0">
+                                    <img src="{{$log_aktifitas->user->getPhotoProfile()}}" alt="Generic placeholder image"
+                                        class="rounded-circle border border-dark me-1" height="35" width="35" alt=""
+                                        loading="lazy">
+                                </div>
+                                <div class="flex-grow-1 ms-3">
+                                    <div class="d-flex flex-row align-items-center">
+                                        <p class="mb-0">{{$log_aktifitas->proyek_batch->proyek->proyek_owner->name}}</p>
+                                    </div>
+
+                                    <div>
+                                        <p class="small mb-0 mb-0">{{$log_aktifitas->waktuTarikDana()}}</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <p class="text-pendanaan mt-2"><span class="text-harga">Tarik Dana Sebesar : <span class="fw-bold">Rp 
+                                        {{number_format($log_aktifitas->nominal,0,",",".")}}</span>
+                            <p class="small mt-2">{!!$log_aktifitas ->description!!}</p>
+                        </div>
+                    </div>
+                    @endforeach
+                    <a type="button" class="btn btn-success rounded-pill d-grid mt-3"
+                        href="{{route('donation.kabar-terbaru',$proyek_batch->id)}}">more details</a>
+
+                </div>
+            </div>
+        </div>
     </div>
-</div>
+</div></div>
 
 @endsection

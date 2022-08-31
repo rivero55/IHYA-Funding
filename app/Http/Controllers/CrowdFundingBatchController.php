@@ -136,8 +136,8 @@ class CrowdFundingBatchController extends Controller
     }
         $update_proyek=$update->update([
             'name' => $request->proyek_name,
-            'type' => $request->type,
-            'location' => $request->location_code,
+            'type' => $request->proyek_type,
+            'location' => $request->location,
             'description' => $request->description,
             'updated_at' => Carbon::now(),
         ]);
